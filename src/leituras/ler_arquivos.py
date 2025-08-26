@@ -49,7 +49,7 @@ def ler_arquivo(formato_arquivo: Literal["netcdf", "parquet"],
 
     Args:
         formato_arquivo: Formato do arquivo a ser lido.
-            Exemples: "netcdf", "parquet".
+            Examples: "netcdf", "parquet".
         path: Caminho do arquivo a ser lido. Pode ser um Path ou uma string. 
             No caso de dask dataframes, o caminho deve ser de uma pasta onde os arquivos estão armazenados. 
             Mas também pode ser passado o caminho de um arquivo parquet específico, que será lido como um dask dataframe.

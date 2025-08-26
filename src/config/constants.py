@@ -298,23 +298,23 @@ class Plataformas:
         COORDENADAS (list): Coordenadas das plataformas.
         SIMBOLOS (list): Símbolos das plataformas.
 
-            Exemples: ["p1", "p2", "p3", ...]
+            Examples: ["p1", "p2", "p3", ...]
         
         ARQUIVOS_NOMES_BASE (list): Base dos nomes dos arquivos para cada plataforma, utilizando o símbolo e o nome da plataforma.
 
-            Exemples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
+            Examples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
 
         ARQUIVOS_NC_NOMES (list): Nomes dos arquivos NetCDF correspondentes, com extensão ".nc".
 
-            Exemples: ["p1-NAMORADO_2_(PNA-2).nc", "p2-PETROBRAS_26_(P-26).nc", ...]
+            Examples: ["p1-NAMORADO_2_(PNA-2).nc", "p2-PETROBRAS_26_(P-26).nc", ...]
 
         PASTAS_DASK_DATAFRAME_NOMES (list): Nomes das pastas onde os dados serão armazenados no Dask DataFrame, sem extensão.
 
-            Exemples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
+            Examples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
 
         DADOS (dict): Dados das plataformas, no formato {plataforma: {chave: valor}, onde valor é um dicionário de simbolos, coordenadas, nome do arquivo NetCDF e nome da pasta do arquivo dask dataframe.
 
-            Exemples: {'NAMORADO 2 (PNA-2)': {'simbolo': 'p1', 'coords': (-22.45073, -40.41175), 'arquivo_nc_nome': 'p1-NAMORADO_2_(PNA-2).nc', 'pasta_dask_nome': 'p1-NAMORADO_2_(PNA-2)'}, ...}
+            Examples: {'NAMORADO 2 (PNA-2)': {'simbolo': 'p1', 'coords': (-22.45073, -40.41175), 'arquivo_nc_nome': 'p1-NAMORADO_2_(PNA-2).nc', 'pasta_dask_nome': 'p1-NAMORADO_2_(PNA-2)'}, ...}
         """
 
 

@@ -3,7 +3,7 @@ from pathlib import Path
 from config.constants import PastasNomes as pn, Correspondencias as cr, FormatosArquivo as fa, Plataformas, ArquivosNomes as an
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
 
-def obtem_nome_pasta_ou_arquivo_chave(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
+def obtem_chave_nome_arquivo(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
         """Pega a chave para o nome do arquivo ou pasta, a partir do formato do arquivo.
             
         Args:
@@ -11,7 +11,7 @@ def obtem_nome_pasta_ou_arquivo_chave(formato_arquivo: Literal["netcdf", "parque
         
         Returns:
             str: Nome da chave para o nome do arquivo ou pasta.
-                Exemples: "arquivo_nc_nome", "pasta_dask_nome"
+                Examples: "arquivo_nc_nome", "pasta_dask_nome"
         """
 
         if formato_arquivo == fa.NETCDF:
@@ -22,7 +22,7 @@ def obtem_nome_pasta_ou_arquivo_chave(formato_arquivo: Literal["netcdf", "parque
         return chave_arquivo_nome
     
 
-def obtem_dados_pasta_nome(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
+def obtem_nome_pasta_dados(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
     """Decide o nome da pasta onde se localizam os arquivos do formato especificado.
         
     Args:
@@ -30,7 +30,7 @@ def obtem_dados_pasta_nome(formato_arquivo: Literal["netcdf", "parquet"]) -> str
     
     Returns:
         str: Nome da pasta de dados
-            Exemples: "datasets", "dataframes"
+            Examples: "datasets", "dataframes"
     """
 
     if formato_arquivo == fa.NETCDF:
@@ -41,7 +41,7 @@ def obtem_dados_pasta_nome(formato_arquivo: Literal["netcdf", "parquet"]) -> str
     return dado_pasta_nome
 
 
-def obtem_pasta_local_nome_especifico(formato_arquivo: Literal["netcdf", "parquet"], 
+def obtem_caminho_e_nome_dados(formato_arquivo: Literal["netcdf", "parquet"], 
                                       plataforma_representacao: Optional[str]) -> tuple[Path, str]:
     """Obtem o nome da pasta que indica o tipo de local dos dados e o nome específico do dataset/dataframe.
 
@@ -56,7 +56,7 @@ def obtem_pasta_local_nome_especifico(formato_arquivo: Literal["netcdf", "parque
         # Garante a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo
         plataforma_representacao = gerencia_plataforma_representacoes(plataforma_representacao)
         
-    chave_arquivo_nome = obtem_nome_pasta_ou_arquivo_chave(formato_arquivo)
+    chave_arquivo_nome = obtem_chave_nome_arquivo(formato_arquivo)
 
     # Caso seja escolhida uma plataforma específica
     if plataforma_representacao in Plataformas.PLATAFORMAS:
@@ -80,6 +80,6 @@ def obtem_pasta_local_nome_especifico(formato_arquivo: Literal["netcdf", "parque
 
 if "__main__" == __name__:
     # Exemplo de uso das funções
-    print(obtem_nome_pasta_ou_arquivo_chave("netcdf"))
-    print(obtem_dados_pasta_nome("parquet"))
-    obtem_pasta_local_nome_especifico("netcdf","p2")
+    print(obtem_chave_nome_arquivo("netcdf"))
+    print(obtem_nome_pasta_dados("parquet"))
+    obtem_caminho_e_nome_dados("netcdf","p2")

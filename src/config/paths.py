@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Optional, Literal, cast
 from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas, Correspondencias as cr, FormatosArquivo as fa
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
-from utils.obtem_dados_plataformas import obtem_dados_pasta_nome, obtem_nome_pasta_ou_arquivo_chave, obtem_pasta_local_nome_especifico
+from utils.obtem_dados_plataformas import obtem_nome_pasta_dados, obtem_chave_nome_arquivo, obtem_caminho_e_nome_dados
 
 
 
@@ -31,7 +31,7 @@ class PathsDados:
     """Agrupa diretórios de armazenamento de dados e fornece funções para construir caminhos para diferentes tipos de dados."""
     
     @staticmethod
-    def obtem_pasta_arquivos_estrutura(formato_arquivo: Literal["netcdf", "parquet"]) -> Path: 
+    def obtem_diretorio_estrutura_dados(formato_arquivo: Literal["netcdf", "parquet"]) -> Path: 
         """Obtém o diretório onde fica a estrutura de dados específica (dataframe ou dataset), que depende do formato do arquivo.
         
         Args:
@@ -39,16 +39,17 @@ class PathsDados:
 
         Returns: 
             Path: Diretório onde fica a estrutura de dados específica.
+                Examples: ".../data/datasets", ".../data/dataframes"
         """ 
 
-        nome_pasta_arquivos_estrutura = obtem_dados_pasta_nome(formato_arquivo)
+        nome_pasta_arquivos_estrutura = obtem_nome_pasta_dados(formato_arquivo)
         diretorio_arquivos_estrutura = DiretoriosBasicos.DIRETORIO_DADOS / nome_pasta_arquivos_estrutura 
 
         return diretorio_arquivos_estrutura
     
 
     @staticmethod
-    def obtem_diretorio_coordenadas_especificas(formato_arquivo: Literal["netcdf", "parquet"]) -> Path:  
+    def obtem_diretorio_coordenadas(formato_arquivo: Literal["netcdf", "parquet"]) -> Path:  
         """Obtém o diretório onde ficam dados para coordenadas específicas, que depende do formato do arquivo.
         
         Args:
@@ -58,11 +59,14 @@ class PathsDados:
 
         Returns: 
             Path: Diretório onde ficam dados para coordenadas específicas.
+                Examples: ".../data/datasets/coordenadas_especificas", ".../data/dataframes/coordenadas_especificas"
         """
-        diretorio_arquivos_estrutura = PathsDados.obtem_pasta_arquivos_estrutura(formato_arquivo)
+
+        diretorio_arquivos_estrutura = PathsDados.obtem_diretorio_estrutura_dados(formato_arquivo)
         diretorio_coordenadas_especificas = diretorio_arquivos_estrutura / pn.COORDENADAS_ESPECIFICAS
 
         return diretorio_coordenadas_especificas
+
 
     @staticmethod
     def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], plataforma_representacao: Optional[str]) -> Path:
@@ -75,13 +79,13 @@ class PathsDados:
         
         Returns:
             Path: Caminho relativo do arquivo/pasta
-                Exemples: plataformas/NAMORADO_2_(PNA-2), 
+                Examples: plataformas/NAMORADO_2_(PNA-2), 
                 plataformas/NAMORADO_2_(PNA-2).nc, 
                 ponto_nao_plataforma/ponto_nao_plataforma, 
                 ponto_nao_plataforma/ponto_nao_plataforma.nc
         """
 
-        pasta_local, nome = obtem_pasta_local_nome_especifico(formato_arquivo, plataforma_representacao)
+        pasta_local, nome = obtem_caminho_e_nome_dados(formato_arquivo, plataforma_representacao)
         
         # Caminho relativo em relação
         caminho_relativo = pasta_local / nome
@@ -108,7 +112,7 @@ class PathsDados:
         """
 
         caminho_relativo = PathsDados.obtem_caminho_relativo(formato_arquivo, plataforma)
-        diretorio_coordenadas_especificas = PathsDados.obtem_diretorio_coordenadas_especificas(formato_arquivo)
+        diretorio_coordenadas_especificas = PathsDados.obtem_diretorio_coordenadas(formato_arquivo)
         
         path = diretorio_coordenadas_especificas / caminho_relativo
 
@@ -169,8 +173,8 @@ class PathsDados:
 
 
 if "__main__" == __name__:
-    print(PathsDados.obtem_pasta_arquivos_estrutura("netcdf"))
-    print(PathsDados.obtem_diretorio_coordenadas_especificas("netcdf"))  
+    print(PathsDados.obtem_diretorio_estrutura_dados("netcdf"))
+    print(PathsDados.obtem_diretorio_coordenadas("netcdf"))  
     print(PathsDados.obtem_caminho_relativo("parquet", "p5"))
       
     

@@ -201,11 +201,11 @@ def requisita_dados_api(
         dataset_salvamento_caminho (Path | Literal["padrao"]): Caminho onde será salvo o dataset. É um caminho padrão 
             quando `usa_multiplas_combinacoes` é True.
         variavel (str): Variável a ser obtida. É padronizado quando `usa_multiplas_combinacoes` é True.
-            Exemples: "u_component_of_wind", "v_component_of_wind", "relative_humidity", "temperature", "geopotential".
+            Examples: "u_component_of_wind", "v_component_of_wind", "relative_humidity", "temperature", "geopotential".
         ano (int | Literal["padrao"]): Ano a ser obtido. É padronizado quando `usa_multiplas_combinacoes` é True.
-            Exemples: 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
+            Examples: 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024.
         pressao_nivel (int | Literal["padrao"]): Nível de pressão a ser obtido. É padronizado quando `usa_multiplas_combinacoes` é True.
-            Exemples: 900, 925, 950, 975, 1000.
+            Examples: 900, 925, 950, 975, 1000.
         substituir (bool): True para permitir a substituição do arquivo caso já exista.
     """
     
