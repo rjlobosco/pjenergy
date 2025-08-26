@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Optional, Literal, cast
 from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas, Correspondencias as cr, FormatosArquivo as fa
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
+from utils.obtem_dados_plataformas import obtem_dados_pasta_nome, obtem_nome_pasta_ou_arquivo_chave, obtem_pasta_local_nome_especifico
 
 
 
@@ -29,93 +30,23 @@ class DiretoriosBasicos:
 class PathsDados:
     """Agrupa diretórios de armazenamento de dados e fornece funções para construir caminhos para diferentes tipos de dados."""
     
-
     @staticmethod
-    def obtem_chave(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
-        """Decide a chave para o nome do arquivo ou pasta, a partir do formato do arquivo.
-            
-        Args:
-            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+    def obtem_pasta_arquivos_estrutura(formato_arquivo: Literal["netcdf", "parquet"]) -> Path: 
+        """Obtém o diretório onde fica a estrutura de dados específica (dataframe ou dataset), que depende do formato do arquivo.
         
-        Returns:
-            str: Nome da chave para o nome do arquivo ou pasta.
-                Exemples: "arquivo_nc_nome", "pasta_dask_nome"
-        """
+        Args:
+            formato_arquivo (Literal["netcdf", "parquet"]): Formato com o qual se deseja trabalhar. 
 
-        if formato_arquivo == fa.NETCDF:
-            chave_arquivo_nome = cr.Chaves.ARQUIVO_NC_CHAVE
-        elif formato_arquivo == fa.PARQUET:
-            chave_arquivo_nome = cr.Chaves.PASTA_DASK_DATAFRAME_CHAVE
+        Returns: 
+            Path: Diretório onde fica a estrutura de dados específica.
+        """ 
 
-        return chave_arquivo_nome
+        nome_pasta_arquivos_estrutura = obtem_dados_pasta_nome(formato_arquivo)
+        diretorio_arquivos_estrutura = DiretoriosBasicos.DIRETORIO_DADOS / nome_pasta_arquivos_estrutura 
+
+        return diretorio_arquivos_estrutura
     
 
-    @staticmethod
-    def obtem_dados_pasta_nome(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
-        """Decide o nome da pasta onde se localizam os arquivos do formato especificado.
-            
-        Args:
-            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
-        
-        Returns:
-            str: Nome da pasta de dados
-                Exemples: "datasets", "dataframes"
-        """
-
-        if formato_arquivo == fa.NETCDF:
-            dado_pasta_nome = pn.DATASETS
-        elif formato_arquivo == fa.PARQUET:
-            dado_pasta_nome = pn.DATAFRAMES
-
-        return dado_pasta_nome
-
-
-    
-    @staticmethod
-    def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str]) -> Path:
-        """Obtém o caminho relativo do arquivo/pasta.
-            
-        Args:
-            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
-            plataforma (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
-                É None no caso de uma coordenada que não define uma plataforma.
-        
-        Returns:
-            Path: Caminho relativo do arquivo/pasta
-                Exemples: plataformas/NAMORADO_2_(PNA-2), 
-                plataformas/NAMORADO_2_(PNA-2).nc, 
-                ponto_nao_plataforma/ponto_nao_plataforma, 
-                ponto_nao_plataforma/ponto_nao_plataforma.nc
-        """
-
-        if isinstance(plataforma, str): # Condição para descartar os casos em que não é passado nenhuma plataforma em específico (None)
-            # Garante a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo
-            plataforma = gerencia_plataforma_representacoes(plataforma)
-
-
-        chave_arquivo_nome = PathsDados.obtem_chave(formato_arquivo)
-        
-
-        # Caso seja escolhida uma plataforma específica
-        if plataforma in Plataformas.PLATAFORMAS:
-            nome = Plataformas.DADOS[plataforma][chave_arquivo_nome] # É um arquivo ou pasta
-            nome = cast(str, nome) # isso é só para o linters, não muda o valor em tempo de execução           
-            pasta_local = Path(pn.PLATAFORMAS) # Pasta que indica o tipo de local dos dados (platafora ou não plataforma)
-        # Caso seja escolhido um outro ponto qualquer coberto pelos dados
-        elif plataforma is None:
-            pasta_local = Path(pn.PONTOS_NAO_PLATAFORMA)
-            if formato_arquivo == fa.NETCDF:
-                nome = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA # É um arquivo
-            elif formato_arquivo == fa.PARQUET:
-                nome = pn.PONTOS_NAO_PLATAFORMA # É uma pasta
-        else:
-            raise ValueError(f" {plataforma} é um valor não válido para plataforma. Valores válidos: \n{Plataformas.PLATAFORMAS} \nOu seus simbolos correspondentes: \n{Plataformas.SIMBOLOS}")
-        
-        # Caminho relativo em relação
-        caminho_relativo = pasta_local / nome
-
-        return caminho_relativo
-    
     @staticmethod
     def obtem_diretorio_coordenadas_especificas(formato_arquivo: Literal["netcdf", "parquet"]) -> Path:  
         """Obtém o diretório onde ficam dados para coordenadas específicas, que depende do formato do arquivo.
@@ -128,10 +59,35 @@ class PathsDados:
         Returns: 
             Path: Diretório onde ficam dados para coordenadas específicas.
         """
-        dados_pasta_nome = PathsDados.obtem_dados_pasta_nome(formato_arquivo)
-        diretorio_coordenadas_especificas = DiretoriosBasicos.DIRETORIO_DADOS / dados_pasta_nome / pn.COORDENADAS_ESPECIFICAS
+        diretorio_arquivos_estrutura = PathsDados.obtem_pasta_arquivos_estrutura(formato_arquivo)
+        diretorio_coordenadas_especificas = diretorio_arquivos_estrutura / pn.COORDENADAS_ESPECIFICAS
 
         return diretorio_coordenadas_especificas
+
+    @staticmethod
+    def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], plataforma_representacao: Optional[str]) -> Path:
+        """Obtém o caminho relativo do arquivo/pasta.
+            
+        Args:
+            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+            plataforma_representacao (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
+                É None no caso de uma coordenada que não define uma plataforma.
+        
+        Returns:
+            Path: Caminho relativo do arquivo/pasta
+                Exemples: plataformas/NAMORADO_2_(PNA-2), 
+                plataformas/NAMORADO_2_(PNA-2).nc, 
+                ponto_nao_plataforma/ponto_nao_plataforma, 
+                ponto_nao_plataforma/ponto_nao_plataforma.nc
+        """
+
+        pasta_local, nome = obtem_pasta_local_nome_especifico(formato_arquivo, plataforma_representacao)
+        
+        # Caminho relativo em relação
+        caminho_relativo = pasta_local / nome
+
+        return caminho_relativo
+    
 
     @staticmethod
     def obtem_path_coord_especifica(formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str]) -> Path:   
@@ -210,3 +166,11 @@ class PathsDados:
         """
 
         DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / pn.DADOS_GERADOS_TESTES
+
+
+if "__main__" == __name__:
+    print(PathsDados.obtem_pasta_arquivos_estrutura("netcdf"))
+    print(PathsDados.obtem_diretorio_coordenadas_especificas("netcdf"))  
+    print(PathsDados.obtem_caminho_relativo("parquet", "p5"))
+      
+    

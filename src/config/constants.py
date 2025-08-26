@@ -239,7 +239,8 @@ class Correspondencias:
             SIMBOLO_CHAVE (str): Chave para o símbolo da plataforma.
             COORDENADAS_CHAVE (str): Chave para as coordenadas da plataforma.
             ARQUIVO_NC_CHAVE (str): Chave para o nome do arquivo NetCDF
-            PASTA_DASK_CHAVE (str): Chave para o nome da pasta no Dask onde os dados da plataforma serão armazenados."""
+            PASTA_DASK_CHAVE (str): Chave para o nome da pasta onde o dataframe da plataforma será armazenado.
+        """
 
 
 
