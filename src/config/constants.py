@@ -312,6 +312,8 @@ class Plataformas:
             Exemples: ["p1-NAMORADO_2_(PNA-2)", "p2-PETROBRAS_26_(P-26)", ...]
 
         DADOS (dict): Dados das plataformas, no formato {plataforma: {chave: valor}, onde valor é um dicionário de simbolos, coordenadas, nome do arquivo NetCDF e nome da pasta do arquivo dask dataframe.
+
+            Exemples: {'NAMORADO 2 (PNA-2)': {'simbolo': 'p1', 'coords': (-22.45073, -40.41175), 'arquivo_nc_nome': 'p1-NAMORADO_2_(PNA-2).nc', 'pasta_dask_nome': 'p1-NAMORADO_2_(PNA-2)'}, ...}
         """
 
 
