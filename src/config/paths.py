@@ -114,6 +114,8 @@ class PathsDados:
 
         Returns: 
             Path: Caminho ou diretório absoluto do arquivo ou pasta.
+                Examples: ".../data/datasets/coordenadas_especificas/plataformas/NAMORADO_2_(PNA-2).nc", 
+                ".../data/dataframes/coordenadas_especificasplataformas/NAMORADO_2_(PNA-2)"
         """
 
         caminho_relativo = PathsDados.caminho_relativo(formato_arquivo, plataforma_representacao)
