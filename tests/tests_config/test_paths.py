@@ -12,9 +12,9 @@ from config.constants import FormatosArquivo as fa
     ]
 )
 def test_obtem_path_coord_especifica(formato_arquivo, plataforma, esperado_path):
-    path = PathsDados.obtem_path_coord_especifica(formato_arquivo, plataforma)
+    path = PathsDados.caminho_absoluto_coordenadas(formato_arquivo, plataforma)
     assert esperado_path == path
 
 def test_obtem_path_coord_especifica_plataforma_invalida():
     with pytest.raises(ValueError):
-        PathsDados.obtem_path_coord_especifica(fa.NETCDF, "PLATAFORMA_INVALIDA")
+        PathsDados.caminho_absoluto_coordenadas(fa.NETCDF, "PLATAFORMA_INVALIDA")

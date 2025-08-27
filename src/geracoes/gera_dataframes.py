@@ -73,8 +73,8 @@ def nc_para_dask_dataframe_simples(plataforma: Optional[str]) -> dd.DataFrame:
         dd.DataFrame: DataFrame Dask resultante da conversão.
     """
 
-    dataset_arquivo_caminho = pad.obtem_path_coord_especifica("netcdf", plataforma)
-    dataframe_arquivo_caminho = pad.obtem_path_coord_especifica("parquet", plataforma)
+    dataset_arquivo_caminho = pad.caminho_absoluto_coordenadas("netcdf", plataforma)
+    dataframe_arquivo_caminho = pad.caminho_absoluto_coordenadas("parquet", plataforma)
     ds = ler_arquivo(fa.NETCDF, dataset_arquivo_caminho, eh_caminho_relativo = False)
     ds = cast(xr.Dataset, ds)
 

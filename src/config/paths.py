@@ -30,8 +30,10 @@ class DiretoriosBasicos:
 class PathsDados:
     """Agrupa diretórios de armazenamento de dados e fornece funções para construir caminhos para diferentes tipos de dados."""
     
+    # Funções Auxiliares
+
     @staticmethod
-    def obtem_diretorio_estrutura_dados(formato_arquivo: Literal["netcdf", "parquet"]) -> Path: 
+    def diretorio_estrutura(formato_arquivo: Literal["netcdf", "parquet"]) -> Path: 
         """Obtém o diretório onde fica a estrutura de dados específica (dataframe ou dataset), que depende do formato do arquivo.
         
         Args:
@@ -49,7 +51,7 @@ class PathsDados:
     
 
     @staticmethod
-    def obtem_diretorio_coordenadas(formato_arquivo: Literal["netcdf", "parquet"]) -> Path:  
+    def diretorio_coordenadas(formato_arquivo: Literal["netcdf", "parquet"]) -> Path:  
         """Obtém o diretório onde ficam dados para coordenadas específicas, que depende do formato do arquivo.
         
         Args:
@@ -62,14 +64,15 @@ class PathsDados:
                 Examples: ".../data/datasets/coordenadas_especificas", ".../data/dataframes/coordenadas_especificas"
         """
 
-        diretorio_arquivos_estrutura = PathsDados.obtem_diretorio_estrutura_dados(formato_arquivo)
+        diretorio_arquivos_estrutura = PathsDados.diretorio_estrutura(formato_arquivo)
         diretorio_coordenadas_especificas = diretorio_arquivos_estrutura / pn.COORDENADAS_ESPECIFICAS
 
         return diretorio_coordenadas_especificas
 
 
     @staticmethod
-    def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], plataforma_representacao: Optional[str]) -> Path:
+    def caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], 
+                        plataforma_representacao: Optional[str]) -> Path:   
         """Obtém o caminho relativo do arquivo/pasta.
             
         Args:
@@ -87,15 +90,17 @@ class PathsDados:
 
         pasta_local, nome = obtem_caminho_e_nome_dados(formato_arquivo, plataforma_representacao)
         
-        # Caminho relativo em relação
         caminho_relativo = pasta_local / nome
 
         return caminho_relativo
     
 
+    # Funções Principais
+
     @staticmethod
-    def obtem_path_coord_especifica(formato_arquivo: Literal["netcdf", "parquet"], plataforma: Optional[str]) -> Path:   
-        """Decide o path (caminho ou diretório) absoluto do arquivo ou pasta que contém dados 
+    def caminho_absoluto_coordenadas(formato_arquivo: Literal["netcdf", "parquet"], 
+                                     plataforma_representacao: Optional[str]) -> Path:   
+        """Decide o caminho ou diretório absoluto do arquivo ou pasta que contém dados 
         para coordenadas específicas para uma plataforma, dado o formato de arquivo com o qual 
         se deseja trabalhar.
         
@@ -111,8 +116,8 @@ class PathsDados:
             Path: Caminho ou diretório absoluto do arquivo ou pasta.
         """
 
-        caminho_relativo = PathsDados.obtem_caminho_relativo(formato_arquivo, plataforma)
-        diretorio_coordenadas_especificas = PathsDados.obtem_diretorio_coordenadas(formato_arquivo)
+        caminho_relativo = PathsDados.caminho_relativo(formato_arquivo, plataforma_representacao)
+        diretorio_coordenadas_especificas = PathsDados.diretorio_coordenadas(formato_arquivo)
         
         path = diretorio_coordenadas_especificas / caminho_relativo
 
@@ -137,7 +142,7 @@ class PathsDados:
         DIRETORIO_ORIGINAIS = BASE / pn.ORIGINAIS
 
         DIRETORIO_UNIDO = BASE / pn.UNIDO
-        CAMINHO_UNIDO = DIRETORIO_UNIDO / an.ARQUIVO_NC_UNIDO
+        CAMINHO_UNIDO = DIRETORIO_UNIDO / an.ARQUIVO_NC_UNIDO  # Caminho do arquivo
 
         DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
         DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
@@ -173,8 +178,7 @@ class PathsDados:
 
 
 if "__main__" == __name__:
-    print(PathsDados.obtem_diretorio_estrutura_dados("netcdf"))
-    print(PathsDados.obtem_diretorio_coordenadas("netcdf"))  
-    print(PathsDados.obtem_caminho_relativo("parquet", "p5"))
-      
-    
+    print(PathsDados.diretorio_estrutura("netcdf"))
+    print(PathsDados.diretorio_coordenadas("netcdf"))  
+    print(PathsDados.caminho_relativo("parquet", "p5"))
+    print(PathsDados.caminho_absoluto_coordenadas("parquet", "p2"))

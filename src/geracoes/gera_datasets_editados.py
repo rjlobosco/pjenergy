@@ -51,7 +51,7 @@ def processa_edicoes(plataforma: Optional[str] = None,
 
     print("Editado.\n")
 
-    salva_dataset_nc(ds, pad.obtem_path_coord_especifica("netcdf", plataforma))
+    salva_dataset_nc(ds, pad.caminho_absoluto_coordenadas("netcdf", plataforma))
 
     return ds
 
