@@ -1,8 +1,7 @@
 from pathlib import Path
-from typing import Optional, Literal, cast
-from config.constants import ArquivosNomes as an, PastasNomes as pn, Plataformas, Correspondencias as cr, FormatosArquivo as fa
-from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
-from utils.obtem_dados_plataformas import obtem_nome_pasta_dados, obtem_chave_nome_arquivo, obtem_caminho_e_nome_dados
+from typing import Optional, Literal
+from config.constants import ArquivosNomes as an, PastasNomes as pn
+from utils.obtem_dados_plataformas import obtem_nome_pasta_dados, obtem_caminho_e_nome_dados
 
 
 
@@ -19,10 +18,10 @@ class DiretoriosBasicos:
     DIRETORIO_BASE_GERAL = Path(__file__).parent.parent.parent 
 
     # Diretório da pasta de dados
-    DIRETORIO_DADOS = DIRETORIO_BASE_GERAL / pn.DADOS
+    DIRETORIO_DADOS = DIRETORIO_BASE_GERAL / pn.DADOS # .../data
 
     # Diretório da pasta de testes
-    DIRETORIO_TESTES = DIRETORIO_BASE_GERAL / pn.TESTES  
+    DIRETORIO_TESTES = DIRETORIO_BASE_GERAL / pn.TESTES # .../data/tests
 
 
 
@@ -139,16 +138,16 @@ class PathsDados:
             DIRETORIO_NAO_PLATAFORMAS (Path): Diretório de datasets modificados para representar pontos que não são plataformas.
         """
 
-        BASE = DiretoriosBasicos.DIRETORIO_DADOS / pn.DATASETS 
+        BASE = DiretoriosBasicos.DIRETORIO_DADOS / pn.DATASETS  # .../data/datasets
 
-        DIRETORIO_ORIGINAIS = BASE / pn.ORIGINAIS
+        DIRETORIO_ORIGINAIS = BASE / pn.ORIGINAIS # .../data/datasets/originais
 
-        DIRETORIO_UNIDO = BASE / pn.UNIDO
-        CAMINHO_UNIDO = DIRETORIO_UNIDO / an.ARQUIVO_NC_UNIDO  # Caminho do arquivo
+        DIRETORIO_UNIDO = BASE / pn.UNIDO # .../data/datasets/unido
+        CAMINHO_UNIDO = DIRETORIO_UNIDO / an.ARQUIVO_NC_UNIDO  # Caminho do arquivo: .../data/datasets/unido/dataset_unido.nc
 
-        DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
-        DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
-        DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA
+        DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS # .../data/datasets/coordenadas_especificas
+        DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS # .../data/datasets/coordenadas_especificas/plataformas
+        DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA # .../data/datasets/coordenadas_especificas/ponto_nao_plataforma
 
     
     class Dataframes:
@@ -161,11 +160,11 @@ class PathsDados:
             DIRETORIO_NAO_PLATAFORMAS (Path): Diretório de dataframes que representam pontos que não são plataformas.  
         """
 
-        BASE = DiretoriosBasicos.DIRETORIO_DADOS /  pn.DATAFRAMES
+        BASE = DiretoriosBasicos.DIRETORIO_DADOS /  pn.DATAFRAMES # .../data/dataframes
 
-        DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS
-        DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS
-        DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA
+        DIRETORIO_COORDENADAS_ESPECIFICAS = BASE / pn.COORDENADAS_ESPECIFICAS # .../data/dataframes/coordenadas_especificas
+        DIRETORIO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PLATAFORMAS # .../data/dataframes/coordenadas_especificas/plataformas
+        DIRETORIO_NAO_PLATAFORMAS = DIRETORIO_COORDENADAS_ESPECIFICAS / pn.PONTOS_NAO_PLATAFORMA # .../data/dataframes/coordenadas_especificas/ponto_nao_plataforma
 
 
 
@@ -176,11 +175,11 @@ class PathsDados:
             DIRETORIO_DADOS_GERADOS_TESTES (Path): Diretório de dados gerados em testes.  
         """
 
-        DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / pn.DADOS_GERADOS_TESTES
+        DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / pn.DADOS_GERADOS_TESTES  # .../data/tests/dados_gerados_testes
 
 
 if "__main__" == __name__:
-    print(PathsDados.diretorio_estrutura("netcdf"))
-    print(PathsDados.diretorio_coordenadas("netcdf"))  
-    print(PathsDados.caminho_relativo("parquet", "p5"))
-    print(PathsDados.caminho_absoluto_coordenadas("parquet", "p2"))
+    print(f'Função diretorio_estrutura:\n{PathsDados.diretorio_estrutura("netcdf")}\n')
+    print(f'Função diretorio_coordenadas:\n{PathsDados.diretorio_coordenadas("netcdf")}\n')
+    print(f'Função caminho_relativo:\n{PathsDados.caminho_relativo("parquet", "p5")}\n')
+    print(f'Função caminho_absoluto_coordenadas:\n{PathsDados.caminho_absoluto_coordenadas("parquet", "p2")}\n')

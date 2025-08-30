@@ -30,7 +30,7 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
         # Busca o nome da plataforma associada ao símbolo
         for plataforma in Plataformas.PLATAFORMAS:
             if Plataformas.DADOS[plataforma][cr.Chaves.SIMBOLO_CHAVE] == representacao:
-                print(f"\nCorrespondência: {representacao} -> {plataforma}\n")
+                print(f"Correspondência: {representacao} -> {plataforma}")
                 return plataforma
         # Se não encontrar, lança erro
         raise ValueError("Símbolo não associado a nenhuma plataforma conhecida.")
