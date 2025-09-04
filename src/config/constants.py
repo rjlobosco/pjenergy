@@ -94,33 +94,33 @@ class ArquivosNomes:
 
 
 
-class PastasNomes:
-    """Agrupa nomes de pastas.
+# class PastasNomes:
+#     """Agrupa nomes de pastas.
 
-    Attributes:
-        DADOS (str): Nome da pasta onde todos os dados serão armazenados.
-        DATASETS (str): Nome da pasta onde os datasets serão armazenados.
-        DATAFRAMES (str): Nome da pasta onde os dataframes serão armazenados.
-        ORIGINAIS (str): Nome da pasta onde os arquivos originais serão armazenados.
-        UNIDO (str): Nome da pasta onde o dataset unificado será armazenado.
-        COORDENADAS_ESPECIFICAS (str): Nome da pasta onde os dados de coordenadas específicas serão armazenados.
-        PLATAFORMAS (str): Nome da pasta onde os dados das plataformas serão armazenados.
-        PONTOS_NAO_PLATAFORMA (str): Nome da pasta onde os dados de pontos que não são plataformas serão armazenados.
-        TESTES (str): Nome da pasta onde os testes serão armazenados.
-        DADOS_GERADOS_TESTES (str): Nome da pasta onde os dados gerados para testes serão armazenados.
-    """
+#     Attributes:
+#         DADOS (str): Nome da pasta onde todos os dados serão armazenados.
+#         DATASETS (str): Nome da pasta onde os datasets serão armazenados.
+#         DATAFRAMES (str): Nome da pasta onde os dataframes serão armazenados.
+#         ORIGINAIS (str): Nome da pasta onde os arquivos originais serão armazenados.
+#         UNIDO (str): Nome da pasta onde o dataset unificado será armazenado.
+#         COORDENADAS_ESPECIFICAS (str): Nome da pasta onde os dados de coordenadas específicas serão armazenados.
+#         PLATAFORMAS (str): Nome da pasta onde os dados das plataformas serão armazenados.
+#         PONTOS_NAO_PLATAFORMA (str): Nome da pasta onde os dados de pontos que não são plataformas serão armazenados.
+#         TESTES (str): Nome da pasta onde os testes serão armazenados.
+#         DADOS_GERADOS_TESTES (str): Nome da pasta onde os dados gerados para testes serão armazenados.
+#     """
 
-    DADOS = "data"
-    DATASETS = "datasets"
-    DATAFRAMES = "dataframes"
-    ORIGINAIS = "originais"
-    UNIDO = "unido"
-    COORDENADAS_ESPECIFICAS = "coordenadas_especificas"
-    PLATAFORMAS = "plataformas"
-    PONTOS_NAO_PLATAFORMA = "ponto_nao_plataforma"   
+#     DADOS = "data"
+#     DATASETS = "datasets"
+#     DATAFRAMES = "dataframes"
+#     ORIGINAIS = "originais"
+#     UNIDO = "unido"
+#     COORDENADAS_ESPECIFICAS = "coordenadas_especificas"
+#     PLATAFORMAS = "plataformas"
+#     PONTOS_NAO_PLATAFORMA = "ponto_nao_plataforma"   
 
-    TESTES = "tests"
-    DADOS_GERADOS_TESTES = "dados_gerados_testes"
+#     TESTES = "tests"
+#     DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
 
 class FormatosArquivo:

@@ -1,7 +1,7 @@
 import re
 import xarray as xr
 from typing import Optional
-from config.paths import PathsDados as pad
+from config.paths import Datasets
 from config.constants import ArquivosNomes as an
 from salvamentos.salva_datasets import salva_dataset_nc
 from utils.pega_arquivos import pega_arquivos
@@ -37,7 +37,7 @@ def constroi_parametros_dicio() -> dict:
     """
 
     # Obtém os arquivos do diretório que seguem o padrão de nome esperado
-    arquivos = pega_arquivos(pad.Datasets.DIRETORIO_ORIGINAIS)   
+    arquivos = pega_arquivos(Datasets.DIRETORIO_ORIGINAIS)   
 
     # Cria um dicionário aninhado para armazenar os datasets das combinações de variáveis, anos e níveis de pressão
     print(" -> -> -> Etapa (2/5)\n")
@@ -155,7 +155,7 @@ def unifica_datasets() -> xr.Dataset:
 
     # Salva o dataset em um arquivo NetCDF único
     print(" -> -> -> Etapa (5/5)\n")
-    salva_dataset_nc(dataset_unido, pad.Datasets.CAMINHO_UNIDO)
+    salva_dataset_nc(dataset_unido, Datasets.CAMINHO_UNIDO)
 
     print("Datasets unificados com sucesso!\n\n")
 

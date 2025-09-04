@@ -16,7 +16,7 @@ def test_requisicao_dados(requisitar = True):
     print(f" -> -> -> Nível de pressão escolhido: {pressao_nivel}")
 
     # Localização do arquivo de saída
-    dataset_salvamento_caminho = pad.Testes.DIRETORIO_DADOS_GERADOS_TESTES / f"teste-(var-{variavel})_(ano-{ano})_(pressao-{pressao_nivel}).nc"
+    dataset_salvamento_caminho = pad.DadosTestes.DIRETORIO_DADOS_GERADOS_TESTES / f"teste-(var-{variavel})_(ano-{ano})_(pressao-{pressao_nivel}).nc"
    
     if not requisitar:
         print("\n -> -> -> ATENÇÃO: Requisição de dados não realizada. Mude o parâmetro 'requisitar' para True para realizar a requisição.")
