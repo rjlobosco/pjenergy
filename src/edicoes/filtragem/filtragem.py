@@ -12,6 +12,7 @@ def filtra_estacao(dataframe_diretorio_relativo: Union[str, Path], estacoes: Uni
         estacoes (str | list): Estação ou lista de estações pelas quais se deseja filtrar.
     """
 
+    #dataframe_diretorio_relativo = 
     df = ler_arquivo("parquet", dataframe_diretorio_relativo)
     df = cast(dd.DataFrame, df)  # Garantir que o dataframe é do tipo Dask DataFrame
 

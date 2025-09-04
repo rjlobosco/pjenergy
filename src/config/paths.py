@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional, Literal
 from config.constants import ArquivosNomes as an, PastasNomes as pn
-from utils.obtem_dados_plataformas import obtem_nome_pasta_dados, obtem_caminho_e_nome_dados
+from utils.obtem_dados_plataformas import obtem_nome_pasta_dados, obtem_caminho_relativo
 
 
 
@@ -87,10 +87,8 @@ class PathsDados:
                 ponto_nao_plataforma/ponto_nao_plataforma.nc
         """
 
-        pasta_local, nome = obtem_caminho_e_nome_dados(formato_arquivo, plataforma_representacao)
+        caminho_relativo = obtem_caminho_relativo(formato_arquivo, plataforma_representacao)
         
-        caminho_relativo = pasta_local / nome
-
         return caminho_relativo
     
 

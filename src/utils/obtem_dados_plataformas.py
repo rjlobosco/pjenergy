@@ -41,10 +41,9 @@ def obtem_nome_pasta_dados(formato_arquivo: Literal["netcdf", "parquet"]) -> str
     return dado_pasta_nome
 
 
-def obtem_caminho_e_nome_dados(formato_arquivo: Literal["netcdf", "parquet"], 
-                                      plataforma_representacao: Optional[str]) -> tuple[Path, str]:
-    """Obtem o nome da pasta que indica o tipo de local dos dados e o nome específico do dataset/dataframe.
-
+def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], 
+                                      plataforma_representacao: Optional[str]) -> Path:
+    """Obtém o caminho relativo da pasta dos dados em relação à pasta de plataforma ou não plataforma.
     Args:
             formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
             plataforma_representacao (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
@@ -75,11 +74,11 @@ def obtem_caminho_e_nome_dados(formato_arquivo: Literal["netcdf", "parquet"],
                             Valores válidos: \n{Plataformas.PLATAFORMAS} \n\
                             Ou seus simbolos correspondentes: \n{Plataformas.SIMBOLOS}")
     
-    return pasta_local, nome
+    return pasta_local / nome
 
 
 if "__main__" == __name__:
     # Exemplo de uso das funções
     print(obtem_chave_nome_arquivo("netcdf"))
     print(obtem_nome_pasta_dados("parquet"))
-    obtem_caminho_e_nome_dados("netcdf","p2")
+    print(obtem_caminho_relativo("netcdf","p2"))
