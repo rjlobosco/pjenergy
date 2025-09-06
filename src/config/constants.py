@@ -86,9 +86,9 @@ class ArquivosNomes:
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
-    ARQUIVO_NC_UNIDO = "dataset_unido.nc"
+    # ARQUIVO_NC_UNIDO = "dataset_unido.nc"
 
-    ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
+    # ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
 
 
 
@@ -123,7 +123,7 @@ class ArquivosNomes:
 #     DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
 
-class FormatosArquivo:
+class FormatosDados:
     """Agrupa formatos de arquivo.
 
     Attributes:
@@ -137,7 +137,10 @@ class FormatosArquivo:
 
     FORMATOS_ACEITOS = [NETCDF, PARQUET]
 
+    # ARQUIVO = "arquivo"
+    # PASTA = "pasta"
 
+    # FORMATOS_ACEITOS = [ARQUIVO, PASTA]
 
 class Correspondencias:
     """Agrupa diversas correspondências de constantes e nomes de variáveis.
@@ -380,5 +383,5 @@ if "__main__" == __name__:
 
     print(f"Dados das plataformas: {Plataformas.DADOS}")
 
-    print(f"Formato netcdf: {FormatosArquivo.NETCDF}")
+    # print(f"Formato netcdf: {FormatosDados.NETCDF}")
 

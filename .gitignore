@@ -21,7 +21,7 @@ ENV/
 
 # Arquyivos de dados processados ignorados
 data/datasets/unido
-data/datasets/coordenadas_especificas
+data/datasets/pontuais
 data/dataframes
 
 tests/dados_gerados_testes

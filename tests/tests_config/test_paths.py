@@ -1,6 +1,6 @@
 import pytest
 from config.paths import PathsDados, DiretoriosBasicos
-from config.constants import FormatosArquivo as fa
+from config.constants import FormatosDados as fa
 
 @pytest.mark.parametrize(
     "formato_arquivo, plataforma, esperado_path",

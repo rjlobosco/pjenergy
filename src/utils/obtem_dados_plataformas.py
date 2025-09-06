@@ -1,6 +1,6 @@
 from typing import Literal, cast, Optional
 from pathlib import Path
-from config.constants import PastasNomes as pn, Correspondencias as cr, FormatosArquivo as fa, Plataformas, ArquivosNomes as an
+from config.constants import PastasNomes as pn, Correspondencias as cr, FormatosDados as fa, Plataformas, ArquivosNomes as an
 from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
 
 def obtem_chave_nome_arquivo(formato_arquivo: Literal["netcdf", "parquet"]) -> str:

@@ -1,9 +1,10 @@
-from pathlib import Path
-from typing import Union, cast
+from typing import Union
 import dask.dataframe as dd
-from leituras.ler_arquivos import ler_arquivo
 
-def filtra_estacao(dataframe_diretorio_relativo: Union[str, Path], estacoes: Union[str, list]) -> dd.DataFrame:
+from leituras.ler_arquivos_pastas_especificas import ler_dataframes_pontuais_plataformas_geral
+
+
+def filtra_estacao(plataforma_representacao: str, estacoes: Union[str, list]) -> dd.DataFrame:
     """Filtra um dataframe por uma estação ou lista de estações.
     
     Args:
@@ -12,9 +13,7 @@ def filtra_estacao(dataframe_diretorio_relativo: Union[str, Path], estacoes: Uni
         estacoes (str | list): Estação ou lista de estações pelas quais se deseja filtrar.
     """
 
-    #dataframe_diretorio_relativo = 
-    df = ler_arquivo("parquet", dataframe_diretorio_relativo)
-    df = cast(dd.DataFrame, df)  # Garantir que o dataframe é do tipo Dask DataFrame
+    df = ler_dataframes_pontuais_plataformas_geral(plataforma_representacao)
 
     df_filtrado = df[df["estacao"].isin(estacoes) if isinstance(estacoes, list) else df["estacao"] == estacoes]
     #df_filtrado = df_filtrado.persist()  # Persistir o dataframe filtrado para otimizar o desempenho

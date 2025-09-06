@@ -5,7 +5,7 @@ from typing import Optional
 from pandas import DataFrame
 from leituras.ler_arquivos import ler_arquivo
 from config.paths import PathsDados as pad
-from config.constants import FormatosArquivo as fa, Correspondencias as cr, Plataformas
+from config.constants import FormatosDados as fa, Correspondencias as cr, Plataformas
 from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
 from utils.representa_progresso import representa_progresso
 

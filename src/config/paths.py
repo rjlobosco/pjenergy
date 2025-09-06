@@ -1,8 +1,4 @@
 from pathlib import Path
-from typing import Optional, Literal
-from utils.obtem_dados_plataformas import obtem_nome_pasta_dados, obtem_caminho_relativo
-
-
 
 class DiretoriosBasicos:
     """Agrupa diretorios básicos do projeto
@@ -202,10 +198,10 @@ class DadosTestes:
 
 
 if "__main__" == __name__:
-    print(f'Função diretorio_estrutura:\n{PathsDados.diretorio_estrutura("netcdf")}\n')
-    print(f'Função diretorio_coordenadas:\n{PathsDados.diretorio_coordenadas("netcdf")}\n')
-    print(f'Função caminho_relativo:\n{PathsDados.caminho_relativo("parquet", "p5")}\n')
-    print(f'Função caminho_absoluto_coordenadas:\n{PathsDados.caminho_absoluto_coordenadas("parquet", "p2")}\n')
+    # print(f'Função diretorio_estrutura:\n{PathsDados.diretorio_estrutura("netcdf")}\n')
+    # print(f'Função diretorio_coordenadas:\n{PathsDados.diretorio_coordenadas("netcdf")}\n')
+    # print(f'Função caminho_relativo:\n{PathsDados.caminho_relativo("parquet", "p5")}\n')
+    # print(f'Função caminho_absoluto_coordenadas:\n{PathsDados.caminho_absoluto_coordenadas("parquet", "p2")}\n')
 
     print("-------------------------\n")
 
