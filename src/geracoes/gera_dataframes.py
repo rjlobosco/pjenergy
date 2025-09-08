@@ -1,13 +1,12 @@
 import xarray as xr
 from typing import cast
 import dask.dataframe as dd
-from typing import Optional
 from pandas import DataFrame
-from leituras.ler_arquivos import ler_arquivo
-from config.paths import PathsDados as pad
-from config.constants import FormatosDados as fa, Correspondencias as cr, Plataformas
+from config.paths import Dataframes
+from config.constants import Correspondencias as cr, Plataformas
 from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
 from utils.representa_progresso import representa_progresso
+from leituras.ler_arquivos_pastas_especificas import ler_datasets_pontuais_plataformas_geral
 
 
 
@@ -63,20 +62,18 @@ def merge_dataframes_no_tempo(df_2D: dd.DataFrame, df_1D: DataFrame) -> dd.DataF
 # FUNÇÔES INTERMEDIÁRIAS -------------------------------------------------------------------------------
 
 
-def nc_para_dask_dataframe_simples(plataforma: Optional[str]) -> dd.DataFrame:
+def nc_para_dask_dataframe_simples(plataforma_representacao: str) -> dd.DataFrame:
     """Converte NetCDF em Dask DataFrame, salvando como parquet, preservando variáveis 1D e 2D.
 
     Args:
-        plataforma (Optional[str]): Nome da plataforma ou None se for um outro ponto específico.
+        plataforma_representacao (str): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
 
     Returns:
         dd.DataFrame: DataFrame Dask resultante da conversão.
     """
 
-    dataset_arquivo_caminho = pad.caminho_absoluto_coordenadas("netcdf", plataforma)
-    dataframe_arquivo_caminho = pad.caminho_absoluto_coordenadas("parquet", plataforma)
-    ds = ler_arquivo(fa.NETCDF, dataset_arquivo_caminho, eh_caminho_relativo = False)
-    ds = cast(xr.Dataset, ds)
+    ds = ler_datasets_pontuais_plataformas_geral(plataforma_representacao)
+    df_caminho = Dataframes.DIRETORIO_PLATAFORMAS_GERAL / plataforma_representacao
 
     df, df_str = monta_dataframes_por_dimensao(ds)
 
@@ -84,14 +81,19 @@ def nc_para_dask_dataframe_simples(plataforma: Optional[str]) -> dd.DataFrame:
 
     df_reordenado = df[cr.DadosVariaveis.NOVA_ORDEM_COLUNAS]
 
-    salva_dask_dataframe_parquet(df_reordenado, dataframe_arquivo_caminho)
+    salva_dask_dataframe_parquet(df_reordenado, df_caminho)
 
     return df_reordenado
 
 
 
-def nc_para_dask_dataframe_todas_plataformas():
+# FUNÇÃO PRINCIPAL -------------------------------------------------------------------------------
+
+
+def nc_para_dask_dataframe_plataformas() -> dd.DataFrame:
     """Converte NetCDF de todas plataformas em Dask DataFrame, salvando como parquet."""
+
+    print("--- CRIAÇÃO DE DATAFRAME(S) ---\n\n")
 
     plataformas = Plataformas.PLATAFORMAS # Lista de plataformas
     i = 1
@@ -102,28 +104,30 @@ def nc_para_dask_dataframe_todas_plataformas():
         i += 1
 
     print("Todos os dataframes foram salvos!\n")
+
+    df = cast(dd.DataFrame, df)
     
     return df  # Retorna o dataframe da última plataforma
 
 
-# FUNÇÃO PRINCIPAL -------------------------------------------------------------------------------
 
-def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> None:
-    """Converte NetCDF em Dask DataFrame, salvando como parquet, para todas plataformas ou coordenadas específicas.
 
-    Args:
-        usa_plataformas (bool): Se True, converte NetCDF de todas plataformas. Se False, converte NetCDF de coordenadas específicas.
-    """
+# def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> None:
+#     """Converte NetCDF em Dask DataFrame, salvando como parquet, para todas plataformas ou coordenadas específicas.
 
-    print("--- CRIAÇÃO DE DATAFRAME(S) ---\n\n")
+#     Args:
+#         usa_plataformas (bool): Se True, converte NetCDF de todas plataformas. Se False, converte NetCDF de coordenadas específicas.
+#     """
 
-    if usa_plataformas:
-        nc_para_dask_dataframe_todas_plataformas()
+#     
 
-    elif not usa_plataformas:
-        nc_para_dask_dataframe_simples(None)
+#     if usa_plataformas:
+#         nc_para_dask_dataframe_todas_plataformas()
+
+#     elif not usa_plataformas:
+#         nc_para_dask_dataframe_simples(None)
 
 
 
 if __name__ == "__main__":
-    df = converte_nc_para_dask_dataframe()
+    df = nc_para_dask_dataframe_plataformas()

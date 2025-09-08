@@ -1,10 +1,10 @@
 import glob
 from pathlib import Path
-from config.paths import PathsDados as pad
+from config.paths import Datasets
 from config.constants import ArquivosNomes as an
 
 
-def pega_arquivos(diretorio: Path = pad.Datasets.DIRETORIO_ORIGINAIS, nome_padrao: str = an.PADRAO_ARQUIVOS_NC_ORIGINAIS) -> list[str]:
+def pega_arquivos(diretorio: Path =Datasets.DIRETORIO_ORIGINAIS, nome_padrao: str = an.PADRAO_ARQUIVOS_NC_ORIGINAIS) -> list[str]:
     """Pega todos os arquivos de um determinado diretório com o nome em um determinado padrão
     
     Args:

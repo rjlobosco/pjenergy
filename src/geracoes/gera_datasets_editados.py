@@ -1,26 +1,26 @@
-from typing import Optional
+from typing import cast
 import xarray as xr
+
 from config.constants import Plataformas
-from leituras.ler_arquivos import ler_arquivo
-from config.paths import PathsDados as pad
+from leituras.ler_arquivos_pastas_especificas import ler_dataset_unido
 from salvamentos.salva_datasets import salva_dataset_nc
+from config.paths import Datasets
 from edicoes.limpezas.remove_de_datasets import remove_variaveis_indesejadas
 from edicoes.interpolacoes.interpola_em_datasets import dataset_interpola_lat_lon, interpola_varias_variaveis_em_altura
 from edicoes.adicoes.adiciona_a_datasets import adiciona_variaveis
 from edicoes.renomeacoes.renomeia_em_datasets import dataset_renomeacoes
 from utils.representa_progresso import representa_progresso
+from utils.obtem_dados_plataformas import plataforma_para_arquivo_nome
 
 
 # FUNÇÃO AUXILIARR ----------------------------------------
 
-def processa_edicoes(plataforma: Optional[str] = None, 
-                    latitude_longitude_alvo: Optional[tuple[float, float]] = None) -> xr.Dataset:
+def processa_edicoes(plataforma: str, latitude_longitude_alvo: tuple[float, float]) -> xr.Dataset:
     """Chama as várias funções que realizam edições sequenciais no dataset único para criar um dataset para uma coordenada específica.
     
     Args: 
-        plataforma (Optional[str]): Nome da plataforma ou None no caso de se escolher um ponto pelas coordenadas.
-        latitude_longitude_alvo (Optional[tuple[float, float]]): Coordenadas caso não seja escolhida uma plataforma.
-
+        plataforma (str): Nome da plataforma cujo dados se deseja obter.
+        latitude_longitude_alvo (tuple[float, float]): Coordenadas caso não seja escolhida uma plataforma.
     Returns: 
         xr.Dataset: Dataset após o processamento de todas as edições.
     """
@@ -28,12 +28,8 @@ def processa_edicoes(plataforma: Optional[str] = None,
     print("Editando...\n")
     
     # Lê dataset (verificando se o dataset existe)
-    ds = ler_arquivo("netcdf", pad.Datasets.CAMINHO_UNIDO, False)
-
-    if not isinstance(ds, xr.Dataset):
-        raise TypeError("ds precisa ser um dataset")
-
-    
+    ds = ler_dataset_unido()
+   
     # Lista de processo a ser aplicado
     processos = [remove_variaveis_indesejadas, 
                  dataset_interpola_lat_lon,  
@@ -51,25 +47,21 @@ def processa_edicoes(plataforma: Optional[str] = None,
 
     print("Editado.\n")
 
-    salva_dataset_nc(ds, pad.caminho_absoluto_coordenadas("netcdf", plataforma))
+    arquivo_nome = plataforma_para_arquivo_nome(plataforma)
+    salva_dataset_nc(ds, Datasets.DIRETORIO_PLATAFORMAS_GERAL / arquivo_nome)
 
+    ds = cast(xr.Dataset, ds)
     return ds
 
 
 # FUNÇÃO PRINCIPAL ----------------------------------------
 
 
-def gera_datasets_editados_pontuais(usa_plataformas: bool = True, 
-                        latitude_longitude_alvo: Optional[tuple[float, float]] = None) -> xr.Dataset :
+def gera_datasets_editados_pontuais() -> None :
     """Gera um ou vários datasets editados de ponto geográficos específicos, a partir do dataset unido. 
-
-    Args:
-        usa_plataformas: Se True, gera datasets para todas plataformas. Se False, gera um dataset para as coordenadas fornecidas.
-        latitude_longitude_alvo (Optional[tuple[float, float]]): Coordenadas caso não seja escolhida uma plataforma.
 
     Returns: 
         xr.Dataset: Dataset após o processamento de todas as edições. 
-            Se `usa_plataformas` for True, retorna apenas o dataset da última plataforma.   
 
     Raises:
         ValueError: Erro quando `usa_plataformas` é False, mas não são passadas coordenas específicas.
@@ -77,27 +69,17 @@ def gera_datasets_editados_pontuais(usa_plataformas: bool = True,
 
     print("--- EDIÇÃO DE DATASET(S) ---\n\n")
 
-    if usa_plataformas:
-        if latitude_longitude_alvo is not None:
-            print("\nAVISO: As plataformas já possuem coordenadas registradas," \
-                  "não é necessário passar valores de latitude e longitude." \
-                  f"Coordenadas {latitude_longitude_alvo} ignoradas \n")
+    
+    plataformas_dados = Plataformas.DADOS
+    i = 1
 
-        plataformas_dados = Plataformas.DADOS
-        i = 1
+    for plat in Plataformas.PLATAFORMAS:
+        print(f"Plataforma: {plat} ({representa_progresso(i, Plataformas.PLATAFORMAS)})\n")
+        latitude_longitude_alvo = plataformas_dados[plat]["coords"]
+        processa_edicoes(plat, latitude_longitude_alvo)  
+        i += 1
 
-        for plat in Plataformas.PLATAFORMAS:
-            print(f"Plataforma: {plat} ({representa_progresso(i, Plataformas.PLATAFORMAS)})\n")
-            latitude_longitude_alvo = plataformas_dados[plat]["coords"]
-            ds = processa_edicoes(plat, latitude_longitude_alvo)  # Retorna o valor da última plataforma
-            i += 1
-
-    else:
-        if latitude_longitude_alvo is None:
-            raise ValueError("É necessário informar a latitude e longitude alvo.")
-        ds = processa_edicoes(latitude_longitude_alvo = latitude_longitude_alvo)
-
-    return ds 
+    # return ds    # Retorna o dataset da última plataforma
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 from config.constants import Plataformas, Correspondencias as cr
+from utils.obtem_dados_plataformas import simbolo_para_plataforma
 
-def gerencia_plataforma_representacoes(representacao: str ) -> str:
+def gerencia_plataforma_representacoes(plataforma_representacao: str ) -> str:
     """Gerencia a representação de plataformas, convertendo símbolos em nomes de plataformas específicos e 
     levantando erros para nomes errados.
 
@@ -18,25 +19,20 @@ def gerencia_plataforma_representacoes(representacao: str ) -> str:
     """
 
 
-    if representacao not in Plataformas.SIMBOLOS and representacao not in Plataformas.PLATAFORMAS:
+    if plataforma_representacao not in Plataformas.SIMBOLOS and plataforma_representacao not in Plataformas.PLATAFORMAS:
         raise ValueError("Nome inválido para plataforma. " \
         f"Nomes validos: {Plataformas.PLATAFORMAS} ou " \
         f"Seus símbolos: {Plataformas.SIMBOLOS}")
 
-    elif representacao in Plataformas.PLATAFORMAS:
-        return representacao
+    elif plataforma_representacao in Plataformas.PLATAFORMAS:
+        return plataforma_representacao
     
     else: # representacao in Plataformas.SIMBOLOS:
         # Busca o nome da plataforma associada ao símbolo
-        for plataforma in Plataformas.PLATAFORMAS:
-            if Plataformas.DADOS[plataforma][cr.Chaves.SIMBOLO_CHAVE] == representacao:
-                print(f"Correspondência: {representacao} -> {plataforma}")
-                return plataforma
-        # Se não encontrar, lança erro
-        raise ValueError("Símbolo não associado a nenhuma plataforma conhecida.")
+        plataforma = simbolo_para_plataforma(plataforma_representacao)
+        return plataforma
+    
 
-        
- 
 
 if __name__ == "__main__":
 

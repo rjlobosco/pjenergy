@@ -1,84 +1,116 @@
-from typing import Literal, cast, Optional
-from pathlib import Path
-from config.constants import PastasNomes as pn, Correspondencias as cr, FormatosDados as fa, Plataformas, ArquivosNomes as an
-from utils.gerencia_plataformas_representacoes import gerencia_plataforma_representacoes
+from config.constants import Plataformas, Correspondencias as cr
 
-def obtem_chave_nome_arquivo(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
-        """Pega a chave para o nome do arquivo ou pasta, a partir do formato do arquivo.
+def simbolo_para_plataforma(simbolo: str) -> str:
+    """Obtém o nome da plataforma a partir do símbolo desta."""
+
+    for plat in Plataformas.PLATAFORMAS:
+        if Plataformas.DADOS[plat][cr.Chaves.SIMBOLO_CHAVE] == simbolo:
+            print(f"Correspondência: {simbolo} -> {plat}")
+            return plat
+    
+    raise TypeError("Essa função deve retornar o nome de uma plataforma (str)")
+
+
+
+def plataforma_para_arquivo_nome(plataforma: str) -> str:
+    """Obtém o nome do arquivo a partir da plataforma correspondente."""
+
+    for plat in Plataformas.DADOS:
+        if plat == plataforma:
+            arquivo_nome = Plataformas.DADOS[plat][cr.Chaves.ARQUIVO_NC_CHAVE]
+            return arquivo_nome
+
+    raise TypeError("Essa função deve retornar o nome de um arquivo (str)")
+
+
+
+def plataforma_para_pasta_nome(plataforma: str) -> str:
+    """Obtém o nome da pasta a partir da plataforma correspondente."""
+
+    for plat in Plataformas.DADOS:
+        if plat == plataforma:
+            pasta_nome = Plataformas.DADOS[plat][cr.Chaves.PASTA_DASK_DATAFRAME_CHAVE]
+            return pasta_nome
+
+    raise TypeError("Essa função deve retornar o nome de uma pasta (str)")
+
+
+# def obtem_chave_nome_arquivo(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
+#         """Pega a chave para o nome do arquivo ou pasta, a partir do formato do arquivo.
             
-        Args:
-            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+#         Args:
+#             formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
         
-        Returns:
-            str: Nome da chave para o nome do arquivo ou pasta.
-                Examples: "arquivo_nc_nome", "pasta_dask_nome"
-        """
+#         Returns:
+#             str: Nome da chave para o nome do arquivo ou pasta.
+#                 Examples: "arquivo_nc_nome", "pasta_dask_nome"
+#         """
 
-        if formato_arquivo == fa.NETCDF:
-            chave_arquivo_nome = cr.Chaves.ARQUIVO_NC_CHAVE
-        elif formato_arquivo == fa.PARQUET:
-            chave_arquivo_nome = cr.Chaves.PASTA_DASK_DATAFRAME_CHAVE
+#         if formato_arquivo == fa.NETCDF:
+#             chave_arquivo_nome = cr.Chaves.ARQUIVO_NC_CHAVE
+#         elif formato_arquivo == fa.PARQUET:
+#             chave_arquivo_nome = cr.Chaves.PASTA_DASK_DATAFRAME_CHAVE
 
-        return chave_arquivo_nome
+#         return chave_arquivo_nome
     
 
-def obtem_nome_pasta_dados(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
-    """Decide o nome da pasta onde se localizam os arquivos do formato especificado.
+# def obtem_nome_pasta_dados(formato_arquivo: Literal["netcdf", "parquet"]) -> str:
+#     """Decide o nome da pasta onde se localizam os arquivos do formato especificado.
         
-    Args:
-        formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+#     Args:
+#         formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
     
-    Returns:
-        str: Nome da pasta de dados
-            Examples: "datasets", "dataframes"
-    """
+#     Returns:
+#         str: Nome da pasta de dados
+#             Examples: "datasets", "dataframes"
+#     """
 
-    if formato_arquivo == fa.NETCDF:
-        dado_pasta_nome = pn.DATASETS
-    elif formato_arquivo == fa.PARQUET:
-        dado_pasta_nome = pn.DATAFRAMES
+#     if formato_arquivo == fa.NETCDF:
+#         dado_pasta_nome = pn.DATASETS
+#     elif formato_arquivo == fa.PARQUET:
+#         dado_pasta_nome = pn.DATAFRAMES
 
-    return dado_pasta_nome
+#     return dado_pasta_nome
 
 
-def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], 
-                                      plataforma_representacao: Optional[str]) -> Path:
-    """Obtém o caminho relativo da pasta dos dados em relação à pasta de plataforma ou não plataforma.
-    Args:
-            formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
-            plataforma_representacao (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
-                É None no caso de uma coordenada que não define uma plataforma.
+# def obtem_caminho_relativo(formato_arquivo: Literal["netcdf", "parquet"], 
+#                                       plataforma_representacao: Optional[str]) -> Path:
+#     """Obtém o caminho relativo da pasta dos dados em relação à pasta de plataforma ou não plataforma.
+#     Args:
+#             formato_arquivo (Literal["netcdf", "parquet"]): Formato de arquivo com o qual se deseja trabalhar.
+#             plataforma_representacao (Optional[str]): Nome (ou símbolo) da plataforma cujo caminho dos dados se deseja obter.
+#                 É None no caso de uma coordenada que não define uma plataforma.
         
-    """
+#     """
 
-    if isinstance(plataforma_representacao, str): # Condição para descartar os casos em que não é passado nenhuma plataforma em específico (None)
-        # Garante a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo
-        plataforma_representacao = gerencia_plataforma_representacoes(plataforma_representacao)
+#     if isinstance(plataforma_representacao, str): # Condição para descartar os casos em que não é passado nenhuma plataforma em específico (None)
+#         # Garante a possibilidade de receber tanto o nome completo da plataforma quanto seu símbolo
+#         plataforma_representacao = gerencia_plataforma_representacoes(plataforma_representacao)
         
-    chave_arquivo_nome = obtem_chave_nome_arquivo(formato_arquivo)
+#     chave_arquivo_nome = obtem_chave_nome_arquivo(formato_arquivo)
 
-    # Caso seja escolhida uma plataforma específica
-    if plataforma_representacao in Plataformas.PLATAFORMAS:
-        pasta_local = Path(pn.PLATAFORMAS) # Pasta que indica o tipo de local dos dados (no caso, em plataforma)
-        nome = Plataformas.DADOS[plataforma_representacao][chave_arquivo_nome] # Pode ser um arquivo ou pasta
-        nome = cast(str, nome) # isso é só para o linters, não muda o valor em tempo de execução           
-    # Caso seja escolhido um outro ponto qualquer coberto pelos dados
-    elif plataforma_representacao is None:
-        pasta_local = Path(pn.PONTOS_NAO_PLATAFORMA)
-        if formato_arquivo == fa.NETCDF:
-            nome = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA # É um arquivo
-        elif formato_arquivo == fa.PARQUET:
-            nome = pn.PONTOS_NAO_PLATAFORMA # É uma pasta
-    else:
-        raise ValueError(f" {plataforma_representacao} é um valor não válido para plataforma. \n\
-                            Valores válidos: \n{Plataformas.PLATAFORMAS} \n\
-                            Ou seus simbolos correspondentes: \n{Plataformas.SIMBOLOS}")
+#     # Caso seja escolhida uma plataforma específica
+#     if plataforma_representacao in Plataformas.PLATAFORMAS:
+#         pasta_local = Path(pn.PLATAFORMAS) # Pasta que indica o tipo de local dos dados (no caso, em plataforma)
+#         nome = Plataformas.DADOS[plataforma_representacao][chave_arquivo_nome] # Pode ser um arquivo ou pasta
+#         nome = cast(str, nome) # isso é só para o linters, não muda o valor em tempo de execução           
+#     # Caso seja escolhido um outro ponto qualquer coberto pelos dados
+#     elif plataforma_representacao is None:
+#         pasta_local = Path(pn.PONTOS_NAO_PLATAFORMA)
+#         if formato_arquivo == fa.NETCDF:
+#             nome = an.ARQUIVO_NC_PONTO_NAO_PLATAFORMA # É um arquivo
+#         elif formato_arquivo == fa.PARQUET:
+#             nome = pn.PONTOS_NAO_PLATAFORMA # É uma pasta
+#     else:
+#         raise ValueError(f" {plataforma_representacao} é um valor não válido para plataforma. \n\
+#                             Valores válidos: \n{Plataformas.PLATAFORMAS} \n\
+#                             Ou seus simbolos correspondentes: \n{Plataformas.SIMBOLOS}")
     
-    return pasta_local / nome
+#     return pasta_local / nome
 
 
-if "__main__" == __name__:
-    # Exemplo de uso das funções
-    print(obtem_chave_nome_arquivo("netcdf"))
-    print(obtem_nome_pasta_dados("parquet"))
-    print(obtem_caminho_relativo("netcdf","p2"))
+# if "__main__" == __name__:
+#     # Exemplo de uso das funções
+#     print(obtem_chave_nome_arquivo("netcdf"))
+#     print(obtem_nome_pasta_dados("parquet"))
+#     print(obtem_caminho_relativo("netcdf","p2"))
