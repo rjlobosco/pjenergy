@@ -4,7 +4,7 @@
 from typing import Literal, cast
 import cdsapi
 from pathlib import Path
-from config.paths import PathsDados as pad
+from config.paths import Datasets
 from config.constants import ParametrosObtencaoDados as pod
 from utils.existencia_path import garante_path_pai_existencia, verifica_erro_ja_existe_arquivo, existe_path_e_exibe_mensagem
 from utils.verifica_argumentos_padrao import erro_algum_parametro_diferente_do_padrao, erro_algum_parametro_igual_ao_padrao
@@ -163,7 +163,7 @@ def requisita_multiplas_combinacoes() -> None:
 
                 # Monta o caminho do arquivo
                 arquivo_nome = gera_nome_arquivo_nc_padrao(variavel, ano, pressao_nivel)
-                dataset_salvamento_caminho = pad.Datasets.DIRETORIO_ORIGINAIS / arquivo_nome
+                dataset_salvamento_caminho = Datasets.DIRETORIO_ORIGINAIS / arquivo_nome
 
                 # Verifica se o arquivo já existe
                 # Se existir, pula o download

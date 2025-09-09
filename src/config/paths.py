@@ -118,21 +118,29 @@ class DiretoriosBasicos:
 #         return path
     
 
-def diretorios_genericos(base: Path) -> tuple[Path, Path, Path, Path, Path]:
+def diretorios_genericos(base: Path) -> tuple[Path, Path, Path]:
+    """Cria diretórios para datasets ou dataframes.
+    
+    Attributes:
+        BASE (Path): Diretório base onde se encontram todos os datasets ou dataframes.
+    
+    Returns:
+        DIRETORIO_LOCALIZACOES_PONTUAIS (Path): Diretório de dados modificados para representar coordenadas específicas.
+
+        DIRETORIO_PLATAFORMAS (Path): Diretório de dados modificados para representar pontos de plataformas específicas.
+        
+        DIRETORIO_PLATAFORMAS_GERAL (Path): A versão mais abrangente dos dados das plataformas.
+    """
 
     DIRETORIO_LOCALIZACOES_PONTUAIS = base / "pontuais" 
 
     DIRETORIO_PLATAFORMAS = DIRETORIO_LOCALIZACOES_PONTUAIS / "plataformas" 
     DIRETORIO_PLATAFORMAS_GERAL = DIRETORIO_PLATAFORMAS / "geral" 
 
-    DIRETORIO_OUTROS_PONTOS = DIRETORIO_LOCALIZACOES_PONTUAIS / "outros_pontos" 
-    DIRETORIO_OUTROS_PONTOS_GERAL = DIRETORIO_OUTROS_PONTOS / "geral" 
 
     return (DIRETORIO_LOCALIZACOES_PONTUAIS,
             DIRETORIO_PLATAFORMAS,
-            DIRETORIO_PLATAFORMAS_GERAL,
-            DIRETORIO_OUTROS_PONTOS,
-            DIRETORIO_OUTROS_PONTOS_GERAL)
+            DIRETORIO_PLATAFORMAS_GERAL)
 
 
 class Datasets:
@@ -146,8 +154,6 @@ class Datasets:
         DIRETORIO_LOCALIZACOES_PONTUAIS (Path): Diretório de datasets modificados para representar coordenadas específicas.
         DIRETORIO_PLATAFORMAS (Path): Diretório de datasets modificados para representar pontos de plataformas específicas.
         DIRETORIO_PLATAFORMAS_GERAL (Path): A versão mais abrangente dos dados das plataformas.
-        DIRETORIO_OUTROS_PONTOS (Path): Diretório de datasets modificados para representar pontos que não são de plataformas.
-        DIRETORIO_OUTROS_PONTOS_GERAL (Path): A versão mais abrangente dos dados fora dos pontos das plataformas.
     """
 
     BASE = DiretoriosBasicos.DIRETORIO_DADOS / "datasets"  # .../data/datasets
@@ -158,9 +164,7 @@ class Datasets:
 
     (DIRETORIO_LOCALIZACOES_PONTUAIS, # .../data/datasets/pontuais
     DIRETORIO_PLATAFORMAS,            # .../data/datasets/pontuais/plataformas
-    DIRETORIO_PLATAFORMAS_GERAL,      # .../data/datasets/pontuais/plataformas/geral
-    DIRETORIO_OUTROS_PONTOS,          # .../data/datasets/pontuais/outros_pontos
-    DIRETORIO_OUTROS_PONTOS_GERAL     # .../data/datasets/pontuais/outros_pontos/geral
+    DIRETORIO_PLATAFORMAS_GERAL     # .../data/datasets/pontuais/outros_pontos/geral
     ) = diretorios_genericos(BASE)
 
 
@@ -172,17 +176,13 @@ class Dataframes:
         DIRETORIO_LOCALIZACOES_PONTUAIS (Path): Diretório de datasets modificados para representar coordenadas específicas.
         DIRETORIO_PLATAFORMAS (Path): Diretório de datasets modificados para representar pontos de plataformas específicas.
         DIRETORIO_PLATAFORMAS_GERAL (Path): A versão mais abrangente dos dados das plataformas.
-        DIRETORIO_OUTROS_PONTOS (Path): Diretório de datasets modificados para representar pontos que não são de plataformas.
-        DIRETORIO_OUTROS_PONTOS_GERAL (Path): A versão mais abrangente dos dados fora dos pontos das plataformas. 
     """
 
     BASE = DiretoriosBasicos.DIRETORIO_DADOS /  "dataframes" # .../data/dataframes
 
     (DIRETORIO_LOCALIZACOES_PONTUAIS, # .../data/dataframes/pontuais
     DIRETORIO_PLATAFORMAS,            # .../data/dataframes/pontuais/plataformas
-    DIRETORIO_PLATAFORMAS_GERAL,      # .../data/dataframes/pontuais/plataformas/geral
-    DIRETORIO_OUTROS_PONTOS,          # .../data/dataframes/pontuais/outros_pontos
-    DIRETORIO_OUTROS_PONTOS_GERAL     # .../data/dataframes/pontuais/outros_pontos/geral
+    DIRETORIO_PLATAFORMAS_GERAL     # .../data/dataframes/pontuais/outros_pontos/geral
     ) = diretorios_genericos(BASE)
 
 
@@ -191,18 +191,12 @@ class DadosTestes:
     """Agrupa diretórios onde se localizam dados de teste.
     
     Attributes:
-        DIRETORIO_DADOS_GERADOS_TESTES (Path): Diretório de dados gerados em testes.  
+        DIRETORIO_DADOS_GERADOS_TESTES (Path): Diretório da pasta de dados gerados em testes.  
     """
 
     DIRETORIO_DADOS_GERADOS_TESTES = DiretoriosBasicos.DIRETORIO_TESTES / "dados_gerados_testes"  # .../data/tests/dados_gerados_testes
 
 
 if "__main__" == __name__:
-    # print(f'Função diretorio_estrutura:\n{PathsDados.diretorio_estrutura("netcdf")}\n')
-    # print(f'Função diretorio_coordenadas:\n{PathsDados.diretorio_coordenadas("netcdf")}\n')
-    # print(f'Função caminho_relativo:\n{PathsDados.caminho_relativo("parquet", "p5")}\n')
-    # print(f'Função caminho_absoluto_coordenadas:\n{PathsDados.caminho_absoluto_coordenadas("parquet", "p2")}\n')
-
-    print("-------------------------\n")
 
     print(Dataframes.DIRETORIO_PLATAFORMAS_GERAL)
