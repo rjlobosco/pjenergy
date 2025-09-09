@@ -86,41 +86,7 @@ class ArquivosNomes:
     # - O ponto de interrogação após o quantificador torna a captura não gananciosa, pegando o menor número possível de caracteres.
     # - A barra invertida antes dos parênteses é necessária para escapar os parênteses, pois eles têm significado especial em expressões regulares. 
     
-    # ARQUIVO_NC_UNIDO = "dataset_unido.nc"
 
-    # ARQUIVO_NC_PONTO_NAO_PLATAFORMA = "ponto_nao_plataforma.nc"
-
-
-
-
-
-# class PastasNomes:
-#     """Agrupa nomes de pastas.
-
-#     Attributes:
-#         DADOS (str): Nome da pasta onde todos os dados serão armazenados.
-#         DATASETS (str): Nome da pasta onde os datasets serão armazenados.
-#         DATAFRAMES (str): Nome da pasta onde os dataframes serão armazenados.
-#         ORIGINAIS (str): Nome da pasta onde os arquivos originais serão armazenados.
-#         UNIDO (str): Nome da pasta onde o dataset unificado será armazenado.
-#         COORDENADAS_ESPECIFICAS (str): Nome da pasta onde os dados de coordenadas específicas serão armazenados.
-#         PLATAFORMAS (str): Nome da pasta onde os dados das plataformas serão armazenados.
-#         PONTOS_NAO_PLATAFORMA (str): Nome da pasta onde os dados de pontos que não são plataformas serão armazenados.
-#         TESTES (str): Nome da pasta onde os testes serão armazenados.
-#         DADOS_GERADOS_TESTES (str): Nome da pasta onde os dados gerados para testes serão armazenados.
-#     """
-
-#     DADOS = "data"
-#     DATASETS = "datasets"
-#     DATAFRAMES = "dataframes"
-#     ORIGINAIS = "originais"
-#     UNIDO = "unido"
-#     COORDENADAS_ESPECIFICAS = "coordenadas_especificas"
-#     PLATAFORMAS = "plataformas"
-#     PONTOS_NAO_PLATAFORMA = "ponto_nao_plataforma"   
-
-#     TESTES = "tests"
-#     DADOS_GERADOS_TESTES = "dados_gerados_testes"
 
 
 class FormatosDados:
@@ -135,12 +101,6 @@ class FormatosDados:
     NETCDF = "netcdf"
     PARQUET = "parquet"
 
-    FORMATOS_ACEITOS = [NETCDF, PARQUET]
-
-    # ARQUIVO = "arquivo"
-    # PASTA = "pasta"
-
-    # FORMATOS_ACEITOS = [ARQUIVO, PASTA]
 
 class Correspondencias:
     """Agrupa diversas correspondências de constantes e nomes de variáveis.
@@ -249,8 +209,8 @@ class Correspondencias:
 
         SIMBOLO_CHAVE = "simbolo"
         COORDENADAS_CHAVE = "coords"
-        ARQUIVO_NC_CHAVE = "arquivo_nc_nome"
-        PASTA_DASK_DATAFRAME_CHAVE = "pasta_dask_nome"
+        ARQUIVO_CHAVE = "arquivo_nome"
+        PASTA_CHAVE = "pasta_nome"
     
 
 class OutrasConstantes:
@@ -343,7 +303,7 @@ class Plataformas:
     ARQUIVOS_NOMES_BASE = [s + "-" + espaco_para_underline(p) for s, p in zip(SIMBOLOS, PLATAFORMAS)]
 
     ARQUIVOS_NC_NOMES = [n + ".nc" for n in ARQUIVOS_NOMES_BASE]
-    PASTAS_DASK_DATAFRAME_NOMES = ARQUIVOS_NOMES_BASE # Não possui extensão, pois é o nome da pasta onde os dados serão armazenados no Dask.
+    PASTAS_NOMES = ARQUIVOS_NOMES_BASE # Não possui extensão, pois é o nome de pasta.
 
 
 
@@ -351,15 +311,15 @@ class Plataformas:
                         p : {
                             Correspondencias.Chaves.SIMBOLO_CHAVE : s, 
                             Correspondencias.Chaves.COORDENADAS_CHAVE : c, 
-                            Correspondencias.Chaves.ARQUIVO_NC_CHAVE : na_nc, 
-                            Correspondencias.Chaves.PASTA_DASK_DATAFRAME_CHAVE : na_pq
+                            Correspondencias.Chaves.ARQUIVO_CHAVE : na_nc, 
+                            Correspondencias.Chaves.PASTA_CHAVE : na_pq
                             } 
                         for s, p, c, na_nc, na_pq in zip(
                             SIMBOLOS, 
                             PLATAFORMAS, 
                             COORDENADAS, 
                             ARQUIVOS_NC_NOMES, 
-                            PASTAS_DASK_DATAFRAME_NOMES
+                            PASTAS_NOMES
                             )   
                         }
 
@@ -383,5 +343,5 @@ if "__main__" == __name__:
 
     print(f"Dados das plataformas: {Plataformas.DADOS}")
 
-    # print(f"Formato netcdf: {FormatosDados.NETCDF}")
+
 

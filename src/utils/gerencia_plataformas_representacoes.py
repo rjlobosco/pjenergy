@@ -1,4 +1,4 @@
-from config.constants import Plataformas, Correspondencias as cr
+from config.constants import Plataformas
 from utils.obtem_dados_plataformas import simbolo_para_plataforma
 
 def gerencia_plataforma_representacoes(plataforma_representacao: str ) -> str:

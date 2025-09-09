@@ -74,7 +74,7 @@ def gera_datasets_editados_pontuais() -> None :
     i = 1
 
     for plat in Plataformas.PLATAFORMAS:
-        print(f"Plataforma: {plat} ({representa_progresso(i, Plataformas.PLATAFORMAS)})\n")
+        print(f" -> -> -> Plataforma: {plat} ({representa_progresso(i, Plataformas.PLATAFORMAS)})\n")
         latitude_longitude_alvo = plataformas_dados[plat]["coords"]
         processa_edicoes(plat, latitude_longitude_alvo)  
         i += 1
@@ -84,7 +84,5 @@ def gera_datasets_editados_pontuais() -> None :
 
 if __name__ == "__main__":
 
-    # EXEMPLO
-    #ds = gera_datasets_editados_pontuais(False, (-22, -40))
     ds = gera_datasets_editados_pontuais()
-    print(ds)
+

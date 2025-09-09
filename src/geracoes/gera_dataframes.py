@@ -2,6 +2,7 @@ import xarray as xr
 from typing import cast
 import dask.dataframe as dd
 from pandas import DataFrame
+
 from config.paths import Dataframes
 from config.constants import Correspondencias as cr, Plataformas
 from salvamentos.salva_dataframes import salva_dask_dataframe_parquet
@@ -108,25 +109,6 @@ def nc_para_dask_dataframe_plataformas() -> dd.DataFrame:
     df = cast(dd.DataFrame, df)
     
     return df  # Retorna o dataframe da última plataforma
-
-
-
-
-# def converte_nc_para_dask_dataframe(usa_plataformas: bool = True) -> None:
-#     """Converte NetCDF em Dask DataFrame, salvando como parquet, para todas plataformas ou coordenadas específicas.
-
-#     Args:
-#         usa_plataformas (bool): Se True, converte NetCDF de todas plataformas. Se False, converte NetCDF de coordenadas específicas.
-#     """
-
-#     
-
-#     if usa_plataformas:
-#         nc_para_dask_dataframe_todas_plataformas()
-
-#     elif not usa_plataformas:
-#         nc_para_dask_dataframe_simples(None)
-
 
 
 if __name__ == "__main__":

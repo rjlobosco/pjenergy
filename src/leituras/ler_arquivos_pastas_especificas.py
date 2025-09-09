@@ -32,11 +32,6 @@ def ler_datasets_pontuais_plataformas_geral(plataforma_representacao: str, forma
     dataset = cast(xr.Dataset, dataset)
     return dataset
 
-# def ler_datasets_pontuais_outrospontos_geral(arquivo_nome, formato_arquivo: Literal["netcdf"] = "netcdf") -> xr.Dataset:
-#     caminho = Datasets.DIRETORIO_OUTROS_PONTOS_GERAL / arquivo_nome
-#     dataset = ler_arquivo(caminho, formato_arquivo, True)
-#     dataset = cast(xr.Dataset, dataset)
-#     return dataset
 
 
 
@@ -51,17 +46,23 @@ def ler_dataframes_pontuais_plataformas_geral(plataforma_representacao, formato_
     dataframe = cast(dd.DataFrame, dataframe)
     return dataframe
 
-# def ler_dataframes_pontuais_outrospontos_geral(arquivo_nome, formato_arquivo: Literal["parquet"] = "parquet") -> dd.DataFrame:
-#     caminho = Dataframes.DIRETORIO_OUTROS_PONTOS_GERAL / arquivo_nome
-#     dataframe = ler_arquivo(caminho, formato_arquivo, True)
-#     dataframe = cast(dd.DataFrame, dataframe)
-#     return dataframe
+
 
 
 if __name__ == "__main__":
-    dataset = ler_dataset_unido()
-    print(f"1){dataset}\n")
+
+
     dataset = ler_datasets_original("(var-geopotential)_(ano-2017)_(pressao-950).nc")
+    print(f"1){dataset}\n")
+    dataset = ler_dataset_unido()
     print(f"2){dataset}\n")
     dataset = ler_datasets_pontuais_plataformas_geral("p5")
     print(f"3){dataset}\n")
+
+
+    # Configura o pandas para mostrar todas as colunas
+    import pandas as pd
+    pd.set_option('display.max_columns', None)
+
+    dataframe = ler_dataframes_pontuais_plataformas_geral("p4")
+    print(f"4){dataframe.compute()}\n")

@@ -38,7 +38,7 @@ def cria_path_se_nao_existe(path: Path) -> None:
 
     if not path.exists():
         path.mkdir(parents=True, exist_ok=True)
-        print(f" -> -> -> Diretório '{path}' criado com sucesso.")
+        print(f"Diretório '{path}' criado com sucesso.\n")
 
 
 def existe_path_e_exibe_mensagem(path: Path, mensagem: str) -> bool:
