@@ -38,7 +38,7 @@ def ler_datasets_pontuais_plataformas_geral(plataforma_representacao: str, forma
 
 # Dataframes
 
-def ler_dataframes_pontuais_plataformas_geral(plataforma_representacao, formato_arquivo: Literal["parquet"] = "parquet") -> dd.DataFrame:
+def ler_dataframes_pontuais_plataformas_geral(plataforma_representacao: str, formato_arquivo: Literal["parquet"] = "parquet") -> dd.DataFrame:
     plataforma = gerencia_plataforma_representacoes(plataforma_representacao)
     pasta_nome = plataforma_para_pasta_nome(plataforma)
     caminho = Dataframes.DIRETORIO_PLATAFORMAS_GERAL / pasta_nome
