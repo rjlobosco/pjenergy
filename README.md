@@ -25,13 +25,14 @@ All datasets provide complete temporal coverage, including all days of the year 
 ---
 
 
-## Pré-requisitos
+## Prerequisites
 
-- [Anaconda](https://anaconda.org/anaconda/anaconda-navigator): Inclui o Conda, um gerenciador de pacotes e ambientes que facilita a instalação de pacotes, criação de ambientes isolados (evitando assim conflitos de dependência) e, principalmente, permitindo um fluido compartilhamento de configuração de ambiente entre os membros da equipe.
+- [Anaconda](https://anaconda.org/anaconda/anaconda-navigator): Includes Conda, a package and environment manager that facilitates package installation, the creation of isolated environments (thus avoiding dependency conflicts) and, most importantly, enables smooth sharing of environment configurations among team members.
 
-- [Git](https://git-scm.com/downloads): Para o uso e contribuição ao código.
+- [Git](https://git-scm.com/downloads): For using and contributing to the code.
 
-- Conta no [Climate Data Store](https://cds.climate.copernicus.eu/): Local de retirada dos datasets utilizados. Esse passo é opcional, já que os datasets necessários já estão no repositório.
+- An account on the [Climate Data Store](https://cds.climate.copernicus.eu/): The platform from which the datasets used are retrieved. This step is optional, since the required datasets are already included in the repository.
+
 
 
 ---
