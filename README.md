@@ -3,17 +3,23 @@
 
 # Pjenergy
 
-**Pjenergy** é um projeto que visa estimar e estudar o potencial energético do vento na região da Bacia de Campos, com foco em uma área onde se localizam plataformas de petróleo e gás em processo de descomissionamento. A ideia central é contribuir com informações relevantes para uma possível instalação de aerogeradores offshore.
+**Pjenergy** is a research project focused on the quantification and characterization of offshore wind energy potential in the Campos Basin, with particular emphasis on areas currently occupied by oil and gas platforms undergoing decommissioning. The project aims to provide scientifically robust support for the assessment of repurposing strategies and the potential deployment of offshore wind turbines, contributing to energy transition pathways in mature offshore basins.
 
-Os dados utilizados são provenientes do [Climate Data Store (CDS)](https://cds.climate.copernicus.eu/), um repositório europeu de dados climáticos. O dataset específico é o:
+The analysis is based on reanalysis data obtained from [Climate Data Store (CDS)](https://cds.climate.copernicus.eu/), a European repository of climate and atmospheric data. Specifically, the project employs the dataset:
 
-> [ERA5 hourly data on pressure levels from 1940 to present](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels?tab=overview)
+ERA5 hourly data on pressure levels from 1940 to present (https://cds.climate.copernicus.eu/datasets/reanalysis-era5-pressure-levels?tab=overview)
 
-Foram consideradas as 250 combinações de:
-- **5 variáveis:** `u_component_of_wind`, `v_component_of_wind`, `relative_humidity`, `temperature`, `geopotential`
-- **5 níveis de pressão:** 900 hPa, 925 hPa, 950 hPa, 975 hPa, 1000 hPa
-- **10 anos:** 2015 a 2024  
-Todas as combinações cobrem todos os dias do ano, com dados para cada hora cheia.
+ERA5 provides hourly, physically consistent atmospheric fields derived from the assimilation of in situ and remote-sensing observations into a global numerical weather prediction model.
+
+For the present study, a total of 250 variable–level–time combinations were extracted, comprising:
+
+**Five atmospheric variables**: zonal wind component (u), meridional wind component (v), relative humidity, air temperature, and geopotential height;
+
+**Five pressure levels**: 900, 925, 950, 975, and 1000 hPa, representing the lower troposphere relevant for offshore wind resource assessment and vertical wind extrapolation;
+
+**A 10-year period (2015–2024)**, ensuring statistical robustness while capturing interannual variability.
+
+All datasets provide complete temporal coverage, including all days of the year with hourly temporal resolution, enabling detailed analyses of wind climatology, variability, extreme events, and derived quantities such as wind speed, wind direction, shear profiles, and energy density.
 
 
 ---
