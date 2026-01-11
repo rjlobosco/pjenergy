@@ -95,39 +95,38 @@ Using the same function, it is also possible to retrieve a single dataset with a
 
 ---
 
+Data Assembly (UNDER DEVELOPMENT...)
 
-## Montagem dos dados (EM DESENVOLVIMENTO...)
+This stage involves several sub-steps, including merging the obtained datasets, editing and mapping them to platform coordinates, and generating the corresponding dataframes.
 
-Essa etapa envolve várias subetapas, incluindo a união dos datasets obtidos, edição e mapeamento para as coordenadas das plataformas e a geração de dataframes correspondentes.
+The main function for this stage is available here.
 
-A função principal para esta etapa está [aqui](src/main/montagem_dados.py).
+Expected Folder Structure (dynamically generated)
 
-### Estrutura Esperada de Pastas (geradas dinamicamente)
+    Merged dataset: Location of the dataset formed by merging the datasets obtained from the CDS.
 
+    Specific-coordinate datasets
+        Platform datasets: Datasets specific to the coordinates of each studied platform.
+        Non-platform point datasets: Dataset for any other coordinate of interest.
 
-- [Dataset unido](data/datasets/unido): Onde fica o dataset formado pela união dos datasets obtidos do CDS.
-- [Datasets de coordenadas específicas](data/datasets/coordenadas_especificas)
-    - [Datasets de plataformas](data/datasets/coordenadas_especificas/plataformas): Onde ficam os datasets específicos para as coordenadas de cada plataforma estudada.
-    - [Datasets de ponto não plataforma](data/datasets/coordenadas_especificas/ponto_nao_plataforma): Onde fica o dataset para alguma coordenada diferente que tenha se desejado criar.
+    Specific-coordinate dataframes
+        Platform dataframes: Dask dataframes specific to the coordinates of each studied platform.
+        Non-platform point dataframes: Dask dataframe for any other coordinate of interest.
 
-- [Dataframes de coordenadas específicas](data/dataframes/coordenadas_especificas)
-    - [Dataframes de plataformas](data/dataframes/coordenadas_especificas/plataformas/): Onde ficam os dask dataframes específicos para as coordenadas de cada plataforma estudada.
-    - [Dataframes de ponto não plataforma](data/dataframes/coordenadas_especificas/ponto_nao_plataforma/): Onde fica o dask dataframe para alguma coordenada diferente que tenha se desejado criar.
+Design Decisions
 
+Several technical decisions were made to balance performance, readability, and scalability. Some of the main choices are outlined below:
 
----
+Why Dask?
 
-## Decisões de Projeto
+The data volume involved in the project (hourly data, 10 years, 250 variable combinations) is large enough to make the use of pandas inefficient or even infeasible on standard machines. Dask allows the manipulation of datasets larger than the available RAM by splitting them into multiple partitions.
 
-Algumas decisões técnicas foram tomadas visando equilíbrio entre desempenho, legibilidade e escalabilidade. Aqui estão algumas das principais escolhas:
+Why Parquet?
 
-### Por que Dask?
-O volume de dados envolvido no projeto (dados horários, 10 anos, 250 combinações de variáveis) é grande o suficiente para tornar o uso de `pandas` ineficiente ou até inviável em máquinas comuns. O `Dask` permite a **manipulação de dados maiores que a memória RAM disponível**, por dividi-los em múltiplas partes.
+The Parquet format was chosen because:
 
-### Por que Parquet?
-O formato `Parquet` foi escolhido por:
-- Ser um formato **colunar e comprimido**, eficiente para leitura seletiva.
-- Ser altamente compatível com `Dask`, otimizando tempo de leitura/escrita.
-- Reduzir significativamente o uso de armazenamento em comparação com CSV, apesar da desvantagem de não ser diretamente legível por humanos.
-    - No entanto, essa limitação pode ser facilmente contornada, seja utilizando ferramentas de visualização de arquivos Parquet, seja convertendo os dados, parcial ou totalmente, para outros formatos como CSV, sempre que necessário.
+    It is a columnar and compressed format, efficient for selective reads.
+    It is highly compatible with Dask, optimizing read/write performance.
+    It significantly reduces storage usage compared to CSV, despite the drawback of not being directly human-readable.
+        However, this limitation can be easily mitigated by using Parquet file visualization tools or by converting the data, partially or entirely, to other formats such as CSV whenever necessary.
 
