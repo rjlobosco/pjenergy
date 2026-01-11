@@ -45,7 +45,8 @@ All datasets provide complete temporal coverage, including all days of the year 
 - While in the directory where you want to clone the project, type in the terminal:
 
 ```bash
-git clone https://github.com/cff100/pjenergy.git
+git clone https://github.com/cff100/pjenergy.git 
+```bash
 
 2 - Install the project locally
 
