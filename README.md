@@ -38,15 +38,13 @@ All datasets provide complete temporal coverage, including all days of the year 
 ---
 
 
-## Getting Started
+Getting Started
 
-### 1 - Clone the repository
+1 - Clone the repository
 
-- While in the directory where you want to clone the project, type in the terminal:
+    While in the directory where you want to clone the project, type in the terminal:
 
-```bash
-git clone https://github.com/cff100/pjenergy.git 
-```bash
+git clone https://github.com/cff100/pjenergy.git
 
 2 - Install the project locally
 
@@ -60,13 +58,11 @@ And activate it:
 
 conda activate pjenergy
 
-The installed packages are organized in the environment file
-.
+The installed packages are organized in the environment file.
 
 When necessary: Whenever you or someone else working on the project makes changes to this file, an update is required if you want to stay up to date with the changes. To do so, use:
 
 conda env update -f environment.yml
-
 
 
 ### 3 - (Optional) Save the personal token to retrieve data from the Climate Data Store API
