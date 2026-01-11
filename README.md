@@ -90,8 +90,8 @@ The process takes several tens of hours; however, the code structure was designe
 
 Using the same function, it is also possible to retrieve a single dataset with a user-selected combination of variable, year, and pressure level. This type of usage can be tested with [this test file](tests/tests_geracoes/test_requisicao_dados_nc.py). Simply run:
 
-```bash
-pytest -s .\tests\tests_geracoes\test_requisicao_dados_nc.py
+
+    pytest -s .\tests\tests_geracoes\test_requisicao_dados_nc.py
 
 ---
 
