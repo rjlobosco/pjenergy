@@ -42,9 +42,9 @@ Getting Started
 
 1 - Clone the repository
 
-    While in the directory where you want to clone the project, type in the terminal:
+While in the directory where you want to clone the project, type in the terminal:
 
-git clone https://github.com/cff100/pjenergy.git
+    git clone https://github.com/cff100/pjenergy.git
 
 2 - Install the project locally
 
@@ -52,17 +52,17 @@ This makes the project usable as a package (essential for imports) and ensures t
 
 Create the virtual environment with:
 
-conda env create -f environment.yml
+    conda env create -f environment.yml
 
 And activate it:
 
-conda activate pjenergy
+    conda activate pjenergy
 
 The installed packages are organized in the environment file.
 
 When necessary: Whenever you or someone else working on the project makes changes to this file, an update is required if you want to stay up to date with the changes. To do so, use:
 
-conda env update -f environment.yml
+    conda env update -f environment.yml
 
 
 ### 3 - (Optional) Save the personal token to retrieve data from the Climate Data Store API
