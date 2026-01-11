@@ -38,70 +38,65 @@ All datasets provide complete temporal coverage, including all days of the year 
 ---
 
 
-## Primeiros Passos
+## Getting Started
 
-### 1 - Clonar repositório
+### 1 - Clone the repository
 
- - Estando no diretório em que deseja clonar o projeto, digite no terminal:
+- While in the directory where you want to clone the project, type in the terminal:
 
 ```bash
 git clone https://github.com/cff100/pjenergy.git
-```
 
-### 2 - Instalar o projeto localmente
+2 - Install the project locally
 
-Isso torna o projeto utilizável como um pacote (essencial para importações) e garante a instalação de dependências em um ambiente virtual com configurações padronizadas.
+This makes the project usable as a package (essential for imports) and ensures the installation of dependencies in a virtual environment with standardized settings.
 
-Crie o ambiente virtual com:
+Create the virtual environment with:
 
-```bash
 conda env create -f environment.yml
-```
-E o ative:
 
-```bash
+And activate it:
+
 conda activate pjenergy
-```
 
-Os pacotes instalados estão organizados no [arquivo de ambiente](environment.yml). 
+The installed packages are organized in the environment file
+.
 
-**Quando necessário:** Quando você ou outra pessoa trabalhando no projeto fizer alterações neste arquivo, é necessário uma atualização caso se queira estar em dia com as mudanças. Para isso, use:
+When necessary: Whenever you or someone else working on the project makes changes to this file, an update is required if you want to stay up to date with the changes. To do so, use:
 
-```bash
 conda env update -f environment.yml
-```
 
-### 3 - (Opcional) Salvar o token pessoal para obtenção dos dados da API do Climate Data Store
 
-Esse passo serve para manter a generalidade do código, de forma que não ocorra que a conta de apenas uma pessoa seja usada para obtenção dos datasets.
 
-Tendo registrado uma conta no CDS, basta ir à página de [CDSAPI setup](https://cds.climate.copernicus.eu/how-to-api) e copiar o código com *url* e *key*.
+### 3 - (Optional) Save the personal token to retrieve data from the Climate Data Store API
 
-Agora crie um arquivo no seu **diretório de usuário** e dê o nome de .cdsapi (por exemplo, com o comando abaixo) e copie url e key para lá.
+This step is intended to keep the code generic, avoiding the use of a single person’s account to retrieve the datasets.
+
+After registering an account on the CDS, simply go to the [CDSAPI setup](https://cds.climate.copernicus.eu/how-to-api) page and copy the code containing the *url* and *key*.
+
+Now create a file in your **user home directory** named `.cdsapirc` (for example, using the command below) and paste the url and key into it.
 
 ```bash
 notepad $env:USERPROFILE\.cdsapirc
-```
 
-**OBS.:** Conforme o funcionamento esperado, o arquivo .cdsapirc não subirá para o Github.
+
+**OBS.:** As expected, the .cdsapirc file will not be pushed to GitHub.
 
 
 ---
 
 
-## Obtenção dos Dados
+## Data Acquisition
 
-Como esse é um processo extremamente custoso em horas computacionais, os datasets foram obtidos pela API do CDS e armazenados na pasta de [dados NetCDF](data/datasets/originais) do repositório. Ainda assim, a estrutura para obtenção desses dados está no repositório para uso eventual. Os parâmetros utilizados estão definidos na classe `ParametrosObtencaoDados`([neste arquivo](src/config/constants.py)), que centraliza e organiza as combinações necessárias para a obtenção dos dados.
+Since this is an extremely computationally expensive process, the datasets were obtained via the CDS API and stored in the [NetCDF data folder](data/datasets/originais) of the repository. Nevertheless, the structure required to obtain these data is included in the repository for eventual use. The parameters used are defined in the `ParametrosObtencaoDados` class ([in this file](src/config/constants.py)), which centralizes and organizes the combinations required for data retrieval.
 
+The process takes several tens of hours; however, the code structure was designed using a file-naming pattern that allows the download process to be interrupted and resumed as many times as necessary, without having to restart the acquisition from the beginning. The main function responsible for data acquisition is available [here](src/main/obtem_datasets_originais.py).
 
-
-O processo leva dezenas de horas, porém a estrutura do código foi feita utilizando um padrão de nome para os arquivos baixados para permitir que a obtenção possa ser interrompida e recomeçada quantas vezes necessário sem que se tenha que retomar a obtenção desde o início. A função principal para a obtenção está [aqui](src/main/obtem_datasets_originais.py). 
-
-Utilizando a mesma função, também pode se obter apenas um dataset com uma combinação de variável, ano e nível de pressão à escolha do usuário.
-Pode-se testar esse tipo de uso com [este arquivo de teste](tests/tests_geracoes/test_requisicao_dados_nc.py). Basta usar:
+Using the same function, it is also possible to retrieve a single dataset with a user-selected combination of variable, year, and pressure level. This type of usage can be tested with [this test file](tests/tests_geracoes/test_requisicao_dados_nc.py). Simply run:
 
 ```bash
 pytest -s .\tests\tests_geracoes\test_requisicao_dados_nc.py
+
 ```
 
 
