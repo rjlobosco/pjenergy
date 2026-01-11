@@ -97,9 +97,6 @@ Using the same function, it is also possible to retrieve a single dataset with a
 ```bash
 pytest -s .\tests\tests_geracoes\test_requisicao_dados_nc.py
 
-```
-
-
 ---
 
 
