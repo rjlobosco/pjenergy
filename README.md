@@ -95,7 +95,7 @@ Using the same function, it is also possible to retrieve a single dataset with a
 
 ---
 
-Data Assembly (UNDER DEVELOPMENT...)
+## Data Assembly (UNDER DEVELOPMENT...)
 
 This stage involves several sub-steps, including merging the obtained datasets, editing and mapping them to platform coordinates, and generating the corresponding dataframes.
 
@@ -114,9 +114,9 @@ Expected Folder Structure (dynamically generated)
     - **Non-platform point dataframes**: Dask dataframe for any other coordinate of interest.
 
 
-Design Decisions
+## Design Decisions
 
-Several technical decisions were made to balance performance, readability, and scalability. Some of the main choices are outlined below:
+Several technical decisions were made to balance performance, readability, and scalability. Below are some of the main choices:
 
 Why Dask?
 
@@ -126,8 +126,7 @@ Why Parquet?
 
 The Parquet format was chosen because:
 
-    It is a columnar and compressed format, efficient for selective reads.
-    It is highly compatible with Dask, optimizing read/write performance.
-    It significantly reduces storage usage compared to CSV, despite the drawback of not being directly human-readable.
-        However, this limitation can be easily mitigated by using Parquet file visualization tools or by converting the data, partially or entirely, to other formats such as CSV whenever necessary.
-
+It is a columnar and compressed format, efficient for selective reads.
+It is highly compatible with Dask, optimizing read/write performance.
+It significantly reduces storage usage compared to CSV, despite the drawback of not being directly human-readable.
+However, this limitation can be easily mitigated by using Parquet file visualization tools or by converting the data, partially or entirely, to other formats such as CSV whenever necessary.
