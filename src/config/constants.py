@@ -19,7 +19,8 @@ class ParametrosObtencaoDados:
                  "relative_humidity", "temperature", "geopotential") 
 
 
-    PRESSAO_NIVEIS =  (900, 925, 950, 975, 1000) # Em hPa
+  #  PRESSAO_NIVEIS =  (900, 925, 950, 975, 1000) # Em hPa
+    PRESSAO_NIVEIS =  (900) # Em hPa
 
     # Parâmetros temporais
     ANOS = tuple(range(2015, 2026))  # (2015 - 2025) 
