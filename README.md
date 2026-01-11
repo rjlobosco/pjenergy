@@ -73,8 +73,7 @@ After registering an account on the CDS, simply go to the [CDSAPI setup](https:/
 
 Now create a file in your **user home directory** named `.cdsapirc` (for example, using the command below) and paste the url and key into it.
 
-```bash
-notepad $env:USERPROFILE\.cdsapirc
+    notepad $env:USERPROFILE\.cdsapirc
 
 
 **OBS.:** As expected, the .cdsapirc file will not be pushed to GitHub.
