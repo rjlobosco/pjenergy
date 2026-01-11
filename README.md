@@ -99,19 +99,20 @@ Data Assembly (UNDER DEVELOPMENT...)
 
 This stage involves several sub-steps, including merging the obtained datasets, editing and mapping them to platform coordinates, and generating the corresponding dataframes.
 
-The main function for this stage is available here.
+The main function for this stage is available [here](src/main/montagem_dados.py).
 
 Expected Folder Structure (dynamically generated)
 
-    Merged dataset: Location of the dataset formed by merging the datasets obtained from the CDS.
+- **Merged dataset**: Location of the dataset formed by merging the datasets obtained from the CDS.
 
-    Specific-coordinate datasets
-        Platform datasets: Datasets specific to the coordinates of each studied platform.
-        Non-platform point datasets: Dataset for any other coordinate of interest.
+- **Specific-coordinate datasets**
+    - **Platform datasets**: Datasets specific to the coordinates of each studied platform.
+    - **Non-platform point datasets**: Dataset for any other coordinate of interest.
 
-    Specific-coordinate dataframes
-        Platform dataframes: Dask dataframes specific to the coordinates of each studied platform.
-        Non-platform point dataframes: Dask dataframe for any other coordinate of interest.
+- **Specific-coordinate dataframes**
+    - **Platform dataframes**: Dask dataframes specific to the coordinates of each studied platform.
+    - **Non-platform point dataframes**: Dask dataframe for any other coordinate of interest.
+
 
 Design Decisions
 
